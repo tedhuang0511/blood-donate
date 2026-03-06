@@ -475,5 +475,6 @@
   const links=document.querySelectorAll('nav a[href^="#"]');
   secs.forEach(s=>{ new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); const a=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(a){ a.classList.add('active'); a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); } } }); },{rootMargin:'-20% 0px -70% 0px'}).observe(s); });
 </script>
+<script data-goatcounter="https://blooddonate.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

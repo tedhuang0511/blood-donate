@@ -37,366 +37,74 @@
     "keywords": "捐血活動,捐血,捐血站,血液庫存,台灣捐血"
   }
   </script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-
   <style>
-    /* ─── CSS Variables ─────────────────────────────────── */
-    :root {
-      --bg:           #0d0909;
-      --bg-alt:       #130e0e;
-      --surface:      #1c1414;
-      --surface-2:    #251a1a;
-      --accent:       #c41230;
-      --accent-dim:   #8b0d22;
-      --accent-glow:  rgba(196, 18, 48, 0.35);
-      --text:         #f0ebe5;
-      --text-muted:   #a09088;
-      --text-faint:   #5c5050;
-      --border:       #2e2020;
-      --border-bright:#3e2828;
-      --tag-normal-bg:#0d2e1a; --tag-normal-fg:#3ddc84; --tag-normal-border:#1e5e34;
-      --tag-low-bg:   #2e1f00; --tag-low-fg:   #f5c944; --tag-low-border:  #6b4700;
-      --tag-urgent-bg:#2e0b0b; --tag-urgent-fg:#ff5154; --tag-urgent-border:#8b1a1a;
-    }
-
-    /* ─── Reset ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Noto Serif TC", "Noto Sans TC", "Microsoft JhengHei", serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* ─── Grain overlay ──────────────────────────────────── */
-    body::before {
-      content: "";
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.6;
-    }
-
-    /* ─── Scrollbar ────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; height: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 3px; }
-
-    /* ─── Navigation ─────────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: #f5f5f5; color: #333; }
     nav {
-      position: sticky; top: 0; z-index: 200;
-      background: rgba(13, 9, 9, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-bright);
-      padding: 0 24px;
-      display: flex; align-items: center; gap: 0;
-      height: 54px;
+      position: sticky; top: 0; z-index: 100; background: #c0392b; color: #fff;
+      padding: 0 24px; display: flex; align-items: center; gap: 14px;
+      height: 56px; box-shadow: 0 2px 6px rgba(0,0,0,.3);
       overflow-x: auto; flex-wrap: nowrap;
     }
     nav::-webkit-scrollbar { height: 3px; }
-    nav::-webkit-scrollbar-thumb { background: var(--accent-dim); }
-    .site-title {
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 1.05rem; font-weight: 900; letter-spacing: .04em;
-      color: var(--text); white-space: nowrap;
-      margin-right: 20px; flex-shrink: 0;
-    }
-    .site-title span { color: var(--accent); }
-    .nav-divider { width: 1px; height: 20px; background: var(--border-bright); flex-shrink: 0; margin-right: 4px; }
-    nav a {
-      color: var(--text-muted); text-decoration: none;
-      font-size: .78rem; font-weight: 500; letter-spacing: .06em;
-      padding: 4px 12px; white-space: nowrap; flex-shrink: 0;
-      position: relative; transition: color .2s;
-    }
-    nav a::after {
-      content: ""; position: absolute; bottom: -2px; left: 12px; right: 12px;
-      height: 1px; background: var(--accent);
-      transform: scaleX(0); transition: transform .2s;
-    }
-    nav a:hover { color: var(--text); }
-    nav a:hover::after, nav a.active::after { transform: scaleX(1); }
-    nav a.active { color: var(--text); }
-
-    /* ─── Hero Banner ────────────────────────────────────── */
-    .hero {
-      position: relative; overflow: hidden;
-      padding: 80px 24px 72px;
-      text-align: center;
-      background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(196,18,48,0.18) 0%, transparent 70%),
-                  var(--bg-alt);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero::before {
-      content: "血";
-      position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
-      font-family: "Noto Serif TC", serif; font-size: 22rem; font-weight: 700;
-      color: rgba(196,18,48,.04); line-height: 1; user-select: none; pointer-events: none;
-      letter-spacing: -.05em;
-    }
-    .hero-eyebrow {
-      font-size: .72rem; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 18px;
-      display: inline-flex; align-items: center; gap: 10px;
-    }
-    .hero-eyebrow::before, .hero-eyebrow::after {
-      content: ""; display: block; width: 32px; height: 1px; background: var(--accent);
-    }
-    .hero-title {
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(2.4rem, 7vw, 5.5rem);
-      font-weight: 900; line-height: 1.1; letter-spacing: -.02em;
-      color: var(--text);
-      animation: heroFadeUp .9s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-title em {
-      font-style: italic; color: var(--accent);
-      display: inline-block;
-      animation: pulse-glow 3s ease-in-out infinite;
-    }
-    .hero-sub {
-      margin-top: 20px; font-size: .95rem; color: var(--text-muted);
-      letter-spacing: .04em;
-      animation: heroFadeUp .9s .15s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-meta {
-      margin-top: 32px; display: inline-flex; gap: 32px;
-      font-size: .75rem; letter-spacing: .1em; color: var(--text-faint);
-      text-transform: uppercase;
-      animation: heroFadeUp .9s .25s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-meta strong { display: block; color: var(--text-muted); font-size: 1rem; margin-bottom: 2px; font-family: "Playfair Display", serif; }
-
-    @keyframes heroFadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse-glow {
-      0%, 100% { text-shadow: 0 0 20px var(--accent-glow), 0 0 60px rgba(196,18,48,.15); }
-      50%       { text-shadow: 0 0 40px rgba(196,18,48,.55), 0 0 100px rgba(196,18,48,.25); }
-    }
-
-    /* ─── Main container ─────────────────────────────────── */
-    main { max-width: 1100px; margin: 0 auto; padding: 40px 16px 100px; position: relative; z-index: 1; }
-
-    /* ─── Section titles ─────────────────────────────────── */
-    h2.section-title {
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: .72rem; font-weight: 700;
-      color: var(--text-faint); letter-spacing: .18em; text-transform: uppercase;
-      margin-bottom: 18px; padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* ─── Ambassador card ───────────────────────────────── */
-    .ambassador-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px; padding: 28px 24px;
-      margin-bottom: 36px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .ambassador-card::before {
-      content: ""; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(196,18,48,.08), transparent);
-      pointer-events: none;
-    }
-    .ambassador-card img {
-      max-width: 100%; width: 560px;
-      border-radius: 3px;
-      box-shadow: 0 0 0 1px var(--border-bright), 0 8px 40px rgba(0,0,0,.6);
-      display: block; margin: 0 auto;
-    }
-
-    /* ─── Stock card ─────────────────────────────────────── */
-    .stock-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px; padding: 24px 28px;
-      margin-bottom: 36px; overflow-x: auto;
-    }
-    .stock-legend {
-      display: flex; gap: 24px; flex-wrap: wrap;
-      margin-bottom: 18px; font-size: .78rem; color: var(--text-muted);
-    }
-    .legend-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      display: inline-block; margin-right: 6px; vertical-align: middle;
-    }
-    .stock-table {
-      width: 100%; border-collapse: collapse;
-      font-size: .85rem; min-width: 480px;
-    }
-    .stock-table th, .stock-table td {
-      padding: 12px 16px; text-align: center;
-      border: 1px solid var(--border);
-    }
-    .stock-table th {
-      background: var(--surface-2);
-      font-weight: 600; color: var(--text-muted);
-      letter-spacing: .06em; font-size: .75rem; text-transform: uppercase;
-    }
-    .stock-table td:first-child { text-align: left; font-weight: 500; color: var(--text); }
-    .stock-table tr:hover td { background: rgba(255,255,255,.02); }
-
-    .tag {
-      display: inline-block; padding: 3px 12px;
-      border-radius: 2px; font-size: .72rem; font-weight: 700;
-      letter-spacing: .06em; text-transform: uppercase; border: 1px solid;
-    }
-    .tag.normal  { background: var(--tag-normal-bg);  color: var(--tag-normal-fg);  border-color: var(--tag-normal-border); }
-    .tag.low     { background: var(--tag-low-bg);     color: var(--tag-low-fg);     border-color: var(--tag-low-border); }
-    .tag.urgent  { background: var(--tag-urgent-bg);  color: var(--tag-urgent-fg);  border-color: var(--tag-urgent-border); }
-
-    /* ─── Region nav panel ───────────────────────────────── */
-    .region-nav-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px; padding: 20px 24px;
-      margin-bottom: 36px;
-    }
-    .region-nav-wrap h2 { margin-bottom: 16px; }
-    .region-nav-group   { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
-    .region-nav-group .group-label {
-      font-size: .68rem; color: var(--text-faint);
-      font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      min-width: 56px;
-    }
-    .region-nav a {
-      background: transparent;
-      border: 1px solid var(--border-bright);
-      color: var(--text-muted); text-decoration: none;
-      padding: 4px 16px; border-radius: 2px;
-      font-size: .80rem; font-weight: 500;
-      transition: all .2s; letter-spacing: .04em;
-    }
-    .region-nav a:hover {
-      border-color: var(--accent); color: var(--accent);
-      background: rgba(196,18,48,.06);
-    }
-
-    /* ─── Region sections ────────────────────────────────── */
-    .region-section { margin-bottom: 64px; }
-    .region-header  {
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 20px; flex-wrap: wrap;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .region-header h3 {
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 1.4rem; font-weight: 700; color: var(--text);
-      letter-spacing: -.01em;
-    }
-    .region-header h3 span { color: var(--accent); margin-right: 4px; }
-
-    /* blood badges */
+    nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.3); }
+    nav .site-title { font-size: 1.1rem; font-weight: 700; white-space: nowrap; margin-right: 6px; flex-shrink: 0; }
+    nav .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,.3); flex-shrink: 0; }
+    nav a { color: rgba(255,255,255,.85); text-decoration: none; font-size: .82rem; padding: 4px 10px; border-radius: 4px; transition: background .2s; white-space: nowrap; flex-shrink: 0; }
+    nav a:hover { background: rgba(255,255,255,.2); color: #fff; }
+    nav a.active { background: rgba(255,255,255,.25); color: #fff; }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 80px; }
+    h2.section-title { font-size: .9rem; font-weight: 700; color: #888; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 2px solid #ddd; }
+    .stock-card { background: #fff; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow-x: auto; }
+    .stock-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; font-size: .82rem; color: #555; }
+    .legend-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+    .stock-table { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 480px; }
+    .stock-table th, .stock-table td { padding: 10px 14px; text-align: center; border: 1px solid #eee; }
+    .stock-table th { background: #fafafa; font-weight: 600; }
+    .stock-table td:first-child { text-align: left; font-weight: 500; }
+    .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .78rem; font-weight: 600; }
+    .tag.normal { background: #d4edda; color: #155724; }
+    .tag.low { background: #fff3cd; color: #856404; }
+    .tag.urgent { background: #f8d7da; color: #721c24; }
+    .region-nav-wrap { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .region-nav-wrap h2 { margin-bottom: 14px; }
+    .region-nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+    .region-nav-group .group-label { font-size: .75rem; color: #aaa; font-weight: 600; letter-spacing: .05em; min-width: 60px; }
+    .region-nav a { background: #fff; border: 1.5px solid #c0392b; color: #c0392b; text-decoration: none; padding: 5px 16px; border-radius: 20px; font-size: .85rem; font-weight: 600; transition: all .2s; }
+    .region-nav a:hover { background: #c0392b; color: #fff; }
+    .region-section { margin-bottom: 52px; }
+    .region-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+    .region-header h3 { font-size: 1.25rem; font-weight: 700; color: #c0392b; }
     .blood-badges { display: flex; gap: 6px; flex-wrap: wrap; }
-    .blood-badge  {
-      display: inline-flex; align-items: center;
-      padding: 2px 10px; border-radius: 2px;
-      font-size: .70rem; font-weight: 700;
-      border: 1px solid; letter-spacing: .05em;
-    }
-    .blood-badge.normal { border-color: var(--tag-normal-border); color: var(--tag-normal-fg); background: var(--tag-normal-bg); }
-    .blood-badge.low    { border-color: var(--tag-low-border);    color: var(--tag-low-fg);    background: var(--tag-low-bg); }
-    .blood-badge.urgent { border-color: var(--tag-urgent-border); color: var(--tag-urgent-fg); background: var(--tag-urgent-bg); }
-
-    /* ─── Activity grid & cards ──────────────────────────── */
-    .activity-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-    .activity-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--border);
-      border-radius: 3px; overflow: hidden;
-      transition: transform .25s, border-left-color .25s, box-shadow .25s;
-      animation: cardReveal .5s cubic-bezier(.22,1,.36,1) both;
-    }
-    .activity-card:hover {
-      transform: translateY(-4px);
-      border-left-color: var(--accent);
-      box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 0 0 transparent,
-                  inset 0 0 0 0 transparent;
-    }
-    @keyframes cardReveal {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-img-wrap {
-      width: 100%; aspect-ratio: 4/3; overflow: hidden;
-      background: var(--surface-2); cursor: zoom-in; position: relative;
-    }
-    .card-img-wrap img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform .4s; filter: brightness(.9);
-    }
-    .card-img-wrap:hover img { transform: scale(1.06); filter: brightness(1); }
-
-    .card-body    { padding: 14px 16px; }
-    .card-date    {
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: .78rem; font-style: italic;
-      color: var(--accent); margin-bottom: 5px; letter-spacing: .02em;
-    }
-    .card-location { font-size: .90rem; font-weight: 500; color: var(--text); line-height: 1.45; }
-    .card-note    {
-      font-size: .72rem; color: var(--text-muted);
-      margin-top: 8px; line-height: 1.55;
-      border-top: 1px solid var(--border); padding-top: 8px;
-    }
-
-    /* ─── Lightbox ───────────────────────────────────────── */
-    #lightbox {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,.94); z-index: 999;
-      align-items: center; justify-content: center;
-      backdrop-filter: blur(4px);
-    }
+    .blood-badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 12px; font-size: .75rem; font-weight: 700; border: 1.5px solid; }
+    .blood-badge.normal { border-color: #28a745; color: #28a745; background: #f0fff4; }
+    .blood-badge.low { border-color: #e0a800; color: #856404; background: #fffbf0; }
+    .blood-badge.urgent { border-color: #dc3545; color: #dc3545; background: #fff5f5; }
+    .activity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .activity-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.1); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .activity-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,.13); }
+    .card-img-wrap { width: 100%; aspect-ratio: 4/3; overflow: hidden; background: #eee; cursor: zoom-in; position: relative; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+    .card-img-wrap:hover img { transform: scale(1.04); }
+    .card-body { padding: 12px 14px; }
+    .card-date { font-size: .78rem; font-weight: 700; color: #c0392b; margin-bottom: 4px; }
+    .card-location { font-size: .93rem; font-weight: 600; color: #333; line-height: 1.4; }
+    .card-note { font-size: .75rem; color: #888; margin-top: 6px; line-height: 1.5; }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 999; align-items: center; justify-content: center; }
     #lightbox.show { display: flex; }
-    #lightbox img  {
-      max-width: 92vw; max-height: 90vh;
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px var(--border-bright), 0 24px 80px rgba(0,0,0,.8);
-    }
-    #lightbox-close {
-      position: absolute; top: 20px; right: 28px;
-      font-size: 1.8rem; color: var(--text-muted);
-      cursor: pointer; line-height: 1; user-select: none;
-      transition: color .2s;
-    }
-    #lightbox-close:hover { color: var(--accent); }
-
-    /* ─── Source note ────────────────────────────────────── */
-    .source-note { text-align: center; font-size: .72rem; color: var(--text-faint); margin-top: 48px; }
-    .source-note a { color: var(--text-faint); text-decoration: underline; text-underline-offset: 3px; }
-    .source-note a:hover { color: var(--text-muted); }
-
-    /* ─── Responsive ─────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero { padding: 56px 20px 52px; }
-      .hero::before { font-size: 14rem; }
-      .hero-meta { gap: 20px; }
-    }
-    @media (max-width: 500px) {
-      .activity-grid { grid-template-columns: 1fr 1fr; }
-      .hero-meta { flex-direction: column; gap: 12px; }
-    }
+    #lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,.5); }
+    #lightbox-close { position: absolute; top: 16px; right: 24px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; user-select: none; }
+    .source-note { text-align: center; font-size: .75rem; color: #bbb; margin-top: 40px; }
+    .source-note a { color: #bbb; }
+    .ambassador-card { background: #fff; border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 4px rgba(0,0,0,.08); text-align: center; }
+    .ambassador-card img { max-width: 100%; width: 600px; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.12); display: block; margin: 0 auto; }
+    @media (max-width: 500px) { .activity-grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
 
 <nav id="topnav">
-  <span class="site-title"><span>🩸</span> 全台捐血活動</span>
+  <span class="site-title">🩸 全台捐血活動</span>
   <div class="nav-divider"></div>
   <a href="#stock">庫存</a>
   <a href="#taipei">台北</a>
@@ -419,18 +127,6 @@
   <a href="#outlying">離島</a>
 </nav>
 
-<!-- Hero Banner -->
-<div class="hero">
-  <div class="hero-eyebrow">全台捐血活動資訊</div>
-  <h1 class="hero-title">獻血・<em>守護生命</em></h1>
-  <p class="hero-sub">掌握最新捐血活動、血液庫存狀況，讓每一滴血都能到達需要的地方</p>
-  <div class="hero-meta">
-    <div><strong>19+</strong>縣市地區</div>
-    <div><strong>2026</strong>最新資訊</div>
-    <div><strong>即時</strong>庫存狀態</div>
-  </div>
-</div>
-
 <main>
 
 <section id="ambassador" class="ambassador-card">
@@ -439,18 +135,18 @@
 </section>
 
 <section id="stock" class="stock-card">
-  <h2 class="section-title">全台血液庫存狀況（更新：2026/03/13）</h2>
+  <h2 class="section-title">全台血液庫存狀況（更新：2026/03/11）</h2>
   <div class="stock-legend">
-    <span><span class="legend-dot" style="background:var(--tag-normal-fg)"></span>庫存量 7 日以上（正常）</span>
-    <span><span class="legend-dot" style="background:var(--tag-low-fg)"></span>庫存量 4–7 日（偏低）</span>
-    <span><span class="legend-dot" style="background:var(--tag-urgent-fg)"></span>庫存量 4 日以下（急缺）</span>
+    <span><span class="legend-dot" style="background:#28a745"></span>庫存量 7 日以上（正常）</span>
+    <span><span class="legend-dot" style="background:#e0a800"></span>庫存量 4–7 日（偏低）</span>
+    <span><span class="legend-dot" style="background:#dc3545"></span>庫存量 4 日以下（急缺）</span>
   </div>
   <table class="stock-table">
     <thead><tr><th>地區</th><th>A 型</th><th>B 型</th><th>O 型</th><th>AB 型</th></tr></thead>
     <tbody>
-      <tr><td>台北／新北／基隆</td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td></tr>
+      <tr><td>台北／新北／基隆</td><td><span class="tag normal">正常</span></td><td><span class="tag normal">正常</span></td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td></tr>
       <tr><td>桃園／新竹／苗栗</td><td><span class="tag normal">正常</span></td><td><span class="tag normal">正常</span></td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td></tr>
-      <tr><td>台中／彰化／南投／雲林</td><td><span class="tag low">偏低</span></td><td><span class="tag low">偏低</span></td><td><span class="tag urgent">急缺</span></td><td><span class="tag low">偏低</span></td></tr>
+      <tr><td>台中／彰化／南投／雲林</td><td><span class="tag low">偏低</span></td><td><span class="tag low">偏低</span></td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td></tr>
       <tr><td>嘉義／台南／高雄／屏東／台東</td><td><span class="tag normal">正常</span></td><td><span class="tag normal">正常</span></td><td><span class="tag low">偏低</span></td><td><span class="tag normal">正常</span></td></tr>
     </tbody>
   </table>
@@ -481,17 +177,16 @@
 <!-- 台北 -->
 <section id="taipei" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>台北</h3>
+    <h3>📍 台北</h3>
     <div class="blood-badges">
-      <span class="blood-badge low">A 偏低</span><span class="blood-badge normal">B 正常</span>
+      <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">台北 關渡、南海、長春、市府捐血站</div><div class="card-note">捐血集 2 點可兌換血寶造型伸縮卡套鑰匙圈（送完為止）</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/PFF3KHJ.jpeg')"><img src="https://i.imgur.com/PFF3KHJ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">台北 台電主樓左側廣場</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/PFF3KHJ.jpeg')"><img src="https://i.imgur.com/PFF3KHJ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/12–3/13（四–五）</div><div class="card-location">台北 台電主樓左側廣場</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/99ar6wV.jpeg')"><img src="https://i.imgur.com/99ar6wV.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">台北 信義威秀</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/W0kvtBf.jpeg')"><img src="https://i.imgur.com/W0kvtBf.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台北 信義威秀</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/3cmkN8b.jpeg')"><img src="https://i.imgur.com/3cmkN8b.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">6/5、9/4、12/4</div><div class="card-location">台北 公館捷運站一號出口</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/SQL9Y7F.jpeg')"><img src="https://i.imgur.com/SQL9Y7F.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13、4/3、5/1、5/30、6/12、8/8、9/6、9/11、10/9、10/23、11/29、12/25</div><div class="card-location">台北 松壽路 16 巷愛迪達旁</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/IvU07pg.jpeg')"><img src="https://i.imgur.com/IvU07pg.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台北 南港玉成公園福德宮</div></div></div>
@@ -508,41 +203,42 @@
 <!-- 新北 -->
 <section id="newtaipei" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>新北</h3>
+    <h3>📍 新北</h3>
     <div class="blood-badges">
-      <span class="blood-badge low">A 偏低</span><span class="blood-badge normal">B 正常</span>
+      <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">新北 板橋、新店、三重、汐止、樹林捐血站</div><div class="card-note">捐血集 2 點可兌換血寶造型伸縮卡套鑰匙圈</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/W8V9fbF.jpeg')"><img src="https://i.imgur.com/W8V9fbF.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">新北 樹林捐血站</div><div class="card-note">捐血成功加贈湯品兌換券一份（送完為止）</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/qMscIk4.jpeg')"><img src="https://i.imgur.com/qMscIk4.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">新北 三重社會福利大樓</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/RvM575n.jpeg')"><img src="https://i.imgur.com/RvM575n.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">新北 中和 4 號公園</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/QMpQrhd.jpeg')"><img src="https://i.imgur.com/QMpQrhd.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/16、3/23、3/30（一）</div><div class="card-location">新北 三重捐血室</div><div class="card-note">每日前 15 名捐 500cc 送火鍋券 1 張（送完為止）</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/oZAUtRf.jpeg')"><img src="https://i.imgur.com/oZAUtRf.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/20（五）</div><div class="card-location">新北 五股五工路晶冠大樓前廣場</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/VX2vIuU.jpeg')"><img src="https://i.imgur.com/VX2vIuU.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/21（六）</div><div class="card-location">新北 中和鎮福宮</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/PL07arQ.jpeg')"><img src="https://i.imgur.com/PL07arQ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/21–3/29</div><div class="card-location">新北 各指定捐血點</div><div class="card-note">捐血送 寬頻+有線電視0元一個月兌換券 或 海霸王+大地酒店精美禮盒 250cc擇1／500cc擇2</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/3hHihJX.jpeg')"><img src="https://i.imgur.com/3hHihJX.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/29（日）</div><div class="card-location">新北 板橋中山公園近新埔捷運站 4 號出口</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/s7etpOK.jpeg')"><img src="https://i.imgur.com/s7etpOK.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">4/3（五）</div><div class="card-location">新北 林口社區運動公園</div></div></div>  </div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/3hHihJX.jpeg')"><img src="https://i.imgur.com/3hHihJX.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/29（日）</div><div class="card-location">新北 板橋中山公園近新埔捷運站 4 號出口</div></div></div>
+  </div>
 </section>
 
 <!-- 基隆 -->
 <section id="keelung" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>基隆</h3>
+    <h3>📍 基隆</h3>
     <div class="blood-badges">
-      <span class="blood-badge low">A 偏低</span><span class="blood-badge normal">B 正常</span>
+      <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">基隆 捐血站</div><div class="card-note">集 2 點兌換鑰匙圈（送完為止）</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/TjbMeyY.jpeg')"><img src="https://i.imgur.com/TjbMeyY.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">基隆 木蘭海洋海事教育大樓</div></div></div>  </div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">基隆 捐血站</div><div class="card-note">集 2 點兌換鑰匙圈（送完為止）</div></div></div>
+  </div>
 </section>
 
 <!-- 桃園 -->
 <section id="taoyuan" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>桃園</h3>
+    <h3>📍 桃園</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
@@ -551,7 +247,6 @@
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Kjt1ah3.jpeg')"><img src="https://i.imgur.com/Kjt1ah3.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">桃園 龜山分局對面</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/nYnBj7Z.jpeg')"><img src="https://i.imgur.com/nYnBj7Z.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">桃園 南門捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/jshGD6W.jpeg')"><img src="https://i.imgur.com/jshGD6W.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/17（二）</div><div class="card-location">桃園 內墢家樂福</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/BFCATw5.jpeg')"><img src="https://i.imgur.com/BFCATw5.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/23（一）</div><div class="card-location">桃園 青埔扶輪捐血中／青園國小對面</div></div></div>
   </div>
 </section>
@@ -559,7 +254,7 @@
 <!-- 新竹 -->
 <section id="hsinchu" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>新竹</h3>
+    <h3>📍 新竹</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
@@ -574,7 +269,7 @@
 <!-- 苗栗 -->
 <section id="miaoli" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>苗栗</h3>
+    <h3>📍 苗栗</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
@@ -588,10 +283,10 @@
 <!-- 台中 -->
 <section id="taichung" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>台中</h3>
+    <h3>📍 台中</h3>
     <div class="blood-badges">
       <span class="blood-badge low">A 偏低</span><span class="blood-badge low">B 偏低</span>
-      <span class="blood-badge urgent">O 急缺</span><span class="blood-badge low">AB 偏低</span>
+      <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
@@ -602,12 +297,9 @@
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/D8ciEe5.jpeg')"><img src="https://i.imgur.com/D8ciEe5.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/13（五）</div><div class="card-location">台中 龍井竹師路二段</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/ZVHHlby.jpeg')"><img src="https://i.imgur.com/ZVHHlby.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">台中 新光三越捐血車</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/D5fcSgY.jpeg')"><img src="https://i.imgur.com/D5fcSgY.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">台中 南興公園</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/9bJXeje.jpeg')"><img src="https://i.imgur.com/9bJXeje.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/17（二）</div><div class="card-location">台中 警廣台中分台黎明辦公區禮堂</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/mCjAg7m.jpeg')"><img src="https://i.imgur.com/mCjAg7m.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/18（三）</div><div class="card-location">台中 海巡署中部分署大樓</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/9fimKAF.jpeg')"><img src="https://i.imgur.com/9fimKAF.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/19（四）</div><div class="card-location">台中 中正捐血室</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/9bJXeje.jpeg')"><img src="https://i.imgur.com/9bJXeje.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/17（二）</div><div class="card-location">台中 警廣台中分台黎明辦公區禮堂</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/mCjAg7m.jpeg')"><img src="https://i.imgur.com/mCjAg7m.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/18（三）</div><div class="card-location">台中 海巡署中部分署大樓</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/9fimKAF.jpeg')"><img src="https://i.imgur.com/9fimKAF.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/19（四）</div><div class="card-location">台中 中正捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/wAUCzd1.jpeg')"><img src="https://i.imgur.com/wAUCzd1.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/20、3/29、5/8、6/7</div><div class="card-location">台中 公園捐血車／北屯南興宮／北區元保宮／新社受奉宮</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/lcRikKN.jpeg')"><img src="https://i.imgur.com/lcRikKN.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/21（六）</div><div class="card-location">台中 神岡新和宮</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/kQuC1jV.jpeg')"><img src="https://i.imgur.com/kQuC1jV.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">台中 軟體園區</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/RYm22FU.jpeg')"><img src="https://i.imgur.com/RYm22FU.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/28（六）</div><div class="card-location">台中 梧棲民和路一段</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/v9viWvK.jpeg')"><img src="https://i.imgur.com/v9viWvK.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/28–3/29（六–日）</div><div class="card-location">台中 五湖園生命智慧園區</div></div></div>
   </div>
@@ -616,17 +308,16 @@
 <!-- 彰化 -->
 <section id="changhua" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>彰化</h3>
+    <h3>📍 彰化</h3>
     <div class="blood-badges">
       <span class="blood-badge low">A 偏低</span><span class="blood-badge low">B 偏低</span>
-      <span class="blood-badge urgent">O 急缺</span><span class="blood-badge low">AB 偏低</span>
+      <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/oL3uJPm.jpeg')"><img src="https://i.imgur.com/oL3uJPm.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">彰化 社頭鄉公所</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/xHYxqOO.jpeg')"><img src="https://i.imgur.com/xHYxqOO.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 花壇圖書館</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/4jsV3Zl.jpeg')"><img src="https://i.imgur.com/4jsV3Zl.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 員林捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/S8OJW7t.jpeg')"><img src="https://i.imgur.com/S8OJW7t.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 和美實驗學校</div><div class="card-note">已額滿，年後若有名額會釋出</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/JjlVqer.jpeg')"><img src="https://i.imgur.com/JjlVqer.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/11（二）</div><div class="card-location">彰化 中華電信服務中心</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/oL3uJPm.jpeg')"><img src="https://i.imgur.com/oL3uJPm.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">彰化 社頭鄉公所</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/xHYxqOO.jpeg')"><img src="https://i.imgur.com/xHYxqOO.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 花壇圖書館</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/4jsV3Zl.jpeg')"><img src="https://i.imgur.com/4jsV3Zl.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 員林捐血室</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/S8OJW7t.jpeg')"><img src="https://i.imgur.com/S8OJW7t.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">彰化 和美實驗學校</div><div class="card-note">已額滿，年後若有名額會釋出</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/uCPZqGS.jpeg')"><img src="https://i.imgur.com/uCPZqGS.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/24（二）</div><div class="card-location">彰化 福興橋頭村中正路</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/KXNx0yC.jpeg')"><img src="https://i.imgur.com/KXNx0yC.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/27（五）</div><div class="card-location">彰化 和美龍華慈惠堂</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/OeRUvfD.jpeg')"><img src="https://i.imgur.com/OeRUvfD.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">4/1（三）</div><div class="card-location">彰化 員林高中</div></div></div>
@@ -637,10 +328,10 @@
 <!-- 南投 -->
 <section id="nantou" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>南投</h3>
+    <h3>📍 南投</h3>
     <div class="blood-badges">
       <span class="blood-badge low">A 偏低</span><span class="blood-badge low">B 偏低</span>
-      <span class="blood-badge urgent">O 急缺</span><span class="blood-badge low">AB 偏低</span>
+      <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
@@ -654,15 +345,14 @@
 <!-- 雲林 -->
 <section id="yunlin" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>雲林</h3>
+    <h3>📍 雲林</h3>
     <div class="blood-badges">
       <span class="blood-badge low">A 偏低</span><span class="blood-badge low">B 偏低</span>
-      <span class="blood-badge urgent">O 急缺</span><span class="blood-badge low">AB 偏低</span>
+      <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/lrtjzxj.jpeg')"><img src="https://i.imgur.com/lrtjzxj.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/28（六）</div><div class="card-location">雲林 捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/sUldQth.jpeg')"><img src="https://i.imgur.com/sUldQth.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">6/7（日）</div><div class="card-location">雲林 斥南明昌路</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/pLrh9Dn.jpeg')"><img src="https://i.imgur.com/pLrh9Dn.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/28（六）</div><div class="card-location">雲林 虎尾圖書館</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/JClyGUA.jpeg')"><img src="https://i.imgur.com/JClyGUA.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">6/13（六）</div><div class="card-location">雲林 六房天上聖母 115–116 年斗南股紅壇</div></div></div>
   </div>
@@ -671,7 +361,7 @@
 <!-- 嘉義 -->
 <section id="chiayi" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>嘉義</h3>
+    <h3>📍 嘉義</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
@@ -689,7 +379,7 @@
 <!-- 台南 -->
 <section id="tainan" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>台南</h3>
+    <h3>📍 台南</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
@@ -699,9 +389,9 @@
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">台南 固定捐血點</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/L3Atjhe.jpeg')"><img src="https://i.imgur.com/L3Atjhe.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">台南 永福／東興／北安捐血室、中山捐血車</div><div class="card-note">捐血送馬年限量錢母</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/fDIm5dn.png')"><img src="https://i.imgur.com/fDIm5dn.png" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起–3/31</div><div class="card-location">台南 永福捐血室 平日預約活動</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/TVDbT0G.jpeg')"><img src="https://i.imgur.com/TVDbT0G.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/10–3/11（二–三）</div><div class="card-location">台南 嘉南藥理大學大祥堂</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/EaQzsxq.jpeg')"><img src="https://i.imgur.com/EaQzsxq.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/11（三）</div><div class="card-location">台南 六甲國小</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/dT8hJAK.jpeg')"><img src="https://i.imgur.com/dT8hJAK.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台南 歸仁區公所</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/G2kPulI.jpeg')"><img src="https://i.imgur.com/G2kPulI.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台南 東興捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/VXluaSK.jpeg')"><img src="https://i.imgur.com/VXluaSK.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台南 北安捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/YpD5nvM.jpeg')"><img src="https://i.imgur.com/YpD5nvM.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台南 永福捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/OwagjmB.jpeg')"><img src="https://i.imgur.com/OwagjmB.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台南 市東區區公所</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Hg1ugsB.jpeg')"><img src="https://i.imgur.com/Hg1ugsB.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">台南 北區大興公園</div></div></div>
@@ -712,16 +402,14 @@
 <!-- 高雄 -->
 <section id="kaohsiung" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>高雄</h3>
+    <h3>📍 高雄</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">高雄 固定捐血點</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/7DopGHq.jpeg')"><img src="https://i.imgur.com/7DopGHq.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起–3/18（三）</div><div class="card-location">高雄 九如捐血室</div><div class="card-note">捐血送運動毛巾一條</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Qj60cJi.jpeg')"><img src="https://i.imgur.com/Qj60cJi.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/2–3/27</div><div class="card-location">高雄 楠梓／左營／前金捐血室</div><div class="card-note">捐血送 寬頻+有線電視0元一個月兌換券 或 海霸王+大地酒店精美禮盒 250cc擇1／500cc擇2</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">高雄 固定捐血點</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/7DopGHq.jpeg')"><img src="https://i.imgur.com/7DopGHq.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起–3/18（三）</div><div class="card-location">高雄 九如捐血室</div><div class="card-note">捐血送運動毛巾一條</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Qj60cJi.jpeg')"><img src="https://i.imgur.com/Qj60cJi.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/2–3/27</div><div class="card-location">高雄 楠梓／左營／前金捐血室</div><div class="card-note">捐血送 寬頻+有線電視0元一個月兌換券 或 海霸王+大地酒店精美禮盒 250cc擇1／500cc擇2</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/DAudtA8.jpeg')"><img src="https://i.imgur.com/DAudtA8.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/11（三）</div><div class="card-location">高雄 五甲捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/utIRw1G.jpeg')"><img src="https://i.imgur.com/utIRw1G.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/11（三）</div><div class="card-location">高雄 林園王公廟</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/UaGmnnM.jpeg')"><img src="https://i.imgur.com/UaGmnnM.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/12（四）</div><div class="card-location">高雄 左營豐穀宮</div></div></div>
@@ -730,14 +418,9 @@
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/DnVmUbK.jpeg')"><img src="https://i.imgur.com/DnVmUbK.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">高雄 楠梓捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/u02QYXg.jpeg')"><img src="https://i.imgur.com/u02QYXg.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">高雄 前金捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/kXoKczx.jpeg')"><img src="https://i.imgur.com/kXoKczx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">高雄 五甲捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/41UWwL0.jpeg')"><img src="https://i.imgur.com/41UWwL0.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 鳳山捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Sp9gqwm.jpeg')"><img src="https://i.imgur.com/Sp9gqwm.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 五甲捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/pSIUWEn.jpeg')"><img src="https://i.imgur.com/pSIUWEn.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 前金捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/FpfBZVe.jpeg')"><img src="https://i.imgur.com/FpfBZVe.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 樠梓捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/qK1mhiQ.jpeg')"><img src="https://i.imgur.com/qK1mhiQ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 山山捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/rhbQBmS.jpeg')"><img src="https://i.imgur.com/rhbQBmS.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 左營捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Y7cO6tG.jpeg')"><img src="https://i.imgur.com/Y7cO6tG.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">高雄 九如捐血室</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/iqowBNq.jpeg')"><img src="https://i.imgur.com/iqowBNq.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/16（一）</div><div class="card-location">高雄 大寮傑期和發場</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/Q31t40C.jpeg')"><img src="https://i.imgur.com/Q31t40C.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/20（五）</div><div class="card-location">高雄 覆鼎金保安宮</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/H2LKipc.jpeg')"><img src="https://i.imgur.com/H2LKipc.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">高雄 鳥松富祥汽車</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/iqowBNq.jpeg')"><img src="https://i.imgur.com/iqowBNq.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/16（一）</div><div class="card-location">高雄 大寮傑期和發場</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/H2LKipc.jpeg')"><img src="https://i.imgur.com/H2LKipc.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/22（日）</div><div class="card-location">高雄 鳥松富祥汽車</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/RbPgkdW.jpeg')"><img src="https://i.imgur.com/RbPgkdW.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/27（五）</div><div class="card-location">高雄 燕巢汎武電機</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/UDe0lP5.jpeg')"><img src="https://i.imgur.com/UDe0lP5.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/28（六）</div><div class="card-location">高雄 五甲捐血室</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/buDCgXe.jpeg')"><img src="https://i.imgur.com/buDCgXe.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">6/20、9/26、12/20</div><div class="card-location">高雄 關帝廟</div></div></div>
@@ -747,37 +430,33 @@
 <!-- 屏東 -->
 <section id="pingtung" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>屏東</h3>
+    <h3>📍 屏東</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">屏東 捐血站</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/PDC0KL9.jpeg')"><img src="https://i.imgur.com/PDC0KL9.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/30（一）</div><div class="card-location">屏東 東港星巴克斜對面廣場</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/ngd5n4D.jpeg')"><img src="https://i.imgur.com/ngd5n4D.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">4/25、8/22、12/19</div><div class="card-location">屏東 社皮三清宮</div><div class="card-note">送福德正神招財錢母</div></div></div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">屏東 捐血站</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/PDC0KL9.jpeg')"><img src="https://i.imgur.com/PDC0KL9.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/30（一）</div><div class="card-location">屏東 東港星巴克斜對面廣場</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/ngd5n4D.jpeg')"><img src="https://i.imgur.com/ngd5n4D.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">4/25、8/22、12/19</div><div class="card-location">屏東 社皮三清宮</div><div class="card-note">送福德正神招財錢母</div></div></div>
   </div>
 </section>
 
 <!-- 台東 -->
 <section id="taitung" class="region-section">
   <div class="region-header">
-    <h3><span>📍</span>台東</h3>
+    <h3>📍 台東</h3>
     <div class="blood-badges">
       <span class="blood-badge normal">A 正常</span><span class="blood-badge normal">B 正常</span>
       <span class="blood-badge low">O 偏低</span><span class="blood-badge normal">AB 正常</span>
     </div>
   </div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">台東 捐血站</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/w2Pu0cQ.jpeg')"><img src="https://i.imgur.com/w2Pu0cQ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台東 捐血站</div></div></div>
-  </div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">台東 捐血站</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/w2Pu0cQ.jpeg')"><img src="https://i.imgur.com/w2Pu0cQ.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/14（六）</div><div class="card-location">台東 捐血站</div></div></div>  </div>
 </section>
 
 <!-- 宜蘭 -->
 <section id="yilan" class="region-section">
-  <div class="region-header"><h3><span>📍</span>宜蘭</h3></div>
+  <div class="region-header"><h3>📍 宜蘭</h3></div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">宜蘭 捐血站</div><div class="card-note">集 2 點兌換鑰匙圈（送完為止）</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/fGK8KOk.jpeg')"><img src="https://i.imgur.com/fGK8KOk.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">宜蘭 羅東林業文化園區</div></div></div>
@@ -789,28 +468,29 @@
 
 <!-- 花蓮 -->
 <section id="hualien" class="region-section">
-  <div class="region-header"><h3><span>📍</span>花蓮</h3></div>
+  <div class="region-header"><h3>📍 花蓮</h3></div>
   <div class="activity-grid">
-    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">花蓮 捐血站</div><div class="card-note">集 2 點兌換鑰匙圈（送完為止）</div></div></div>    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/yFylGb9.jpeg')"><img src="https://i.imgur.com/yFylGb9.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">3/15（日）</div><div class="card-location">花蓮 潔西艾美渡假酒店</div></div></div>  </div>
+    <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/cGYTM5l.jpeg')"><img src="https://i.imgur.com/cGYTM5l.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">2/16（一）起</div><div class="card-location">花蓮 捐血站</div><div class="card-note">集 2 點兌換鑰匙圈（送完為止）</div></div></div>
+  </div>
 </section>
 
 <!-- 離島 -->
 <section id="outlying" class="region-section">
-  <div class="region-header"><h3><span>📍</span>離島（澎湖）</h3></div>
+  <div class="region-header"><h3>📍 離島（澎湖）</h3></div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/bO3epQx.jpeg')"><img src="https://i.imgur.com/bO3epQx.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起</div><div class="card-location">澎湖 馬公捐血站</div><div class="card-note">捐血即可獲得「熊好運御守造型吊飾」（送完為止）</div></div></div>
   </div>
 </section>
 
 <section id="nationwide" class="region-section">
-  <div class="region-header"><h3><span>📍</span>全台／區域活動</h3></div>
+  <div class="region-header"><h3>📍 全台／區域活動</h3></div>
   <div class="activity-grid">
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/w7rIJLT.jpeg')"><img src="https://i.imgur.com/w7rIJLT.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">即日起–11/30</div><div class="card-location">台中捐血中心轄區內定點捐血集點活動</div><div class="card-note">集點達 3 次可兌換血袋造型抱枕乙個，每人限兌換一次，換完為止</div></div></div>
     <div class="activity-card"><div class="card-img-wrap" onclick="lb('https://i.imgur.com/4Ru8C24.jpeg')"><img src="https://i.imgur.com/4Ru8C24.jpeg" onerror="imgErr(this)"/></div><div class="card-body"><div class="card-date">1/19–12/31</div><div class="card-location">高雄捐血中心轄區內集點活動</div><div class="card-note">累積 3 次可兌換限量台灣黑熊不鏽鋼隨身瓶；250cc 得 1 點，500cc 得 2 點</div></div></div>
   </div>
 </section>
 
-<p class="source-note">資料來源：<a href="https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html" target="_blank">PTT Lifeismoney — 2026年全台捐血贈品</a>／最後更新：2026/03/13</p>
+<p class="source-note">資料來源：<a href="https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html" target="_blank">PTT Lifeismoney — 2026年全台捐血贈品</a>／最後更新：2026/03/11</p>
 </main>
 
 <div id="lightbox" onclick="closeLb()">
@@ -825,7 +505,7 @@
   function imgErr(img){
     img.style.display='none';
     const w=img.closest('.card-img-wrap');
-    if(w){ w.style.cssText='background:#1c1414;display:flex;align-items:center;justify-content:center;cursor:default;aspect-ratio:4/3;'; w.onclick=null; const s=document.createElement('span'); s.textContent='圖片暫不可用'; s.style.cssText='color:#5c5050;font-size:.82rem;'; w.appendChild(s); }
+    if(w){ w.style.cssText='background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:default;aspect-ratio:4/3;'; w.onclick=null; const s=document.createElement('span'); s.textContent='圖片暫不可用'; s.style.cssText='color:#bbb;font-size:.82rem;'; w.appendChild(s); }
   }
   const secs=document.querySelectorAll('section[id],div[id="stock"]');
   const links=document.querySelectorAll('nav a[href^="#"]');
@@ -833,4 +513,4 @@
 </script>
 <script data-goatcounter="https://blooddonate.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
-</html>\
+</html>

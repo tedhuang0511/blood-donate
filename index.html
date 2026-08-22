@@ -89,6 +89,8 @@
     .card-body { padding: 12px 14px; }
     .card-date { font-size: .78rem; font-weight: 700; color: #c0392b; margin-bottom: 4px; }
     .card-location { font-size: .93rem; font-weight: 600; color: #333; line-height: 1.4; }
+    .map-pin { display: inline-block; margin-left: 6px; font-size: .82rem; text-decoration: none; opacity: .7; cursor: pointer; }
+    .map-pin:hover { opacity: 1; }
     .card-note { font-size: .75rem; color: #888; margin-top: 6px; line-height: 1.5; }
     #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 999; align-items: center; justify-content: center; }
     #lightbox.show { display: flex; }
@@ -538,6 +540,22 @@
   const secs=document.querySelectorAll('section[id],div[id="stock"]');
   const links=document.querySelectorAll('nav a[href^="#"]');
   secs.forEach(s=>{ new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); const a=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(a){ a.classList.add('active'); a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); } } }); },{rootMargin:'-20% 0px -70% 0px'}).observe(s); });
+
+  // 幫每張卡片的地點加上 Google Maps 快速連結圖示（泛稱地點如「各指定捐血點」不加）
+  const MAP_EXCLUDE=['各指定','各固定','轄區內'];
+  document.querySelectorAll('.card-location').forEach(loc=>{
+    const text=loc.textContent.trim();
+    if(!text || MAP_EXCLUDE.some(k=>text.includes(k))) return;
+    const pin=document.createElement('a');
+    pin.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(text);
+    pin.target='_blank';
+    pin.rel='noopener';
+    pin.className='map-pin';
+    pin.title='在 Google Maps 開啟「'+text+'」';
+    pin.textContent='📍';
+    pin.addEventListener('click',e=>e.stopPropagation());
+    loc.appendChild(pin);
+  });
 </script>
 <script data-goatcounter="https://blooddonate.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

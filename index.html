@@ -92,6 +92,7 @@
     .map-pin { display: inline-block; margin-left: 6px; font-size: .82rem; text-decoration: none; opacity: .7; cursor: pointer; }
     .map-pin:hover { opacity: 1; }
     .card-note { font-size: .75rem; color: #888; margin-top: 6px; line-height: 1.5; }
+    .tag-pxmart { background: #0057a3; color: #fff; padding: 1px 6px; border-radius: 4px; font-weight: 700; }
     #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 999; align-items: center; justify-content: center; }
     #lightbox.show { display: flex; }
     #lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,.5); }
@@ -555,6 +556,11 @@
     pin.textContent='📍';
     pin.addEventListener('click',e=>e.stopPropagation());
     loc.appendChild(pin);
+  });
+
+  // 贈品說明中「全聯」特別標註藍底白字
+  document.querySelectorAll('.card-note').forEach(note=>{
+    note.innerHTML=note.innerHTML.replace(/全聯/g,'<span class="tag-pxmart">全聯</span>');
   });
 </script>
 <script data-goatcounter="https://blooddonate.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

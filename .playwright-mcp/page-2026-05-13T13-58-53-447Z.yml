@@ -1,0 +1,905 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "批踢踢實業坊" [ref=e4] [cursor=pointer]:
+      - /url: /bbs/
+    - generic [ref=e5]: ›
+    - link "看板 Lifeismoney" [ref=e6] [cursor=pointer]:
+      - /url: /bbs/Lifeismoney/index.html
+    - link "關於我們" [ref=e7] [cursor=pointer]:
+      - /url: /about.html
+    - link "聯絡資訊" [ref=e8] [cursor=pointer]:
+      - /url: /contact.html
+  - link "返回看板" [ref=e11] [cursor=pointer]:
+    - /url: /bbs/Lifeismoney/index.html
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 作者jumpintosky (jumpy)
+      - generic [ref=e16]: 看板Lifeismoney
+      - generic [ref=e17]: 標題2026年全台捐血贈品
+      - generic [ref=e18]: 時間Fri Jan 2 23:00:24 2026
+      - text: 新年開新串，希望今年也能持之以恆( ′▽‵)/ 以下說明 ●本篇僅分享捐血場次，贈品以現場公告為準，無法即時更新異動資訊 ●若對贈品有所期待，建議事先確認。發現現場與文宣不符或贈完，歡迎留言供其他人參考 ●因時間與人力有限，收集打字滿耗時的，未公布面額的禮券/商品卡不會列出，若需完整 資訊請自行查看捐血中心粉專，但有特殊紀念品會分享出來 ●如看到值得推薦的捐血場次，也歡迎分享，使更多人共同響應這份善舉♡ ●推文前請先查看內文是否重複，感謝你的熱心分享 ●若捐血點贈品送完，請告知我將資訊移除，感恩 ●有需要幫忙留意什麼的可以底下推文，我這邊儘量～ 庫存量7日以上(正常) 庫存量4-7日(偏低) 庫存量4日以下(急缺) ●台北/新北/基隆 Ａ Ｂ Ｏ ＡＢ 台北南海捐血室分離術血小板首捐成功贈送專屬紀念小物
+      - link "https://i.imgur.com/RMIaqfU.jpeg" [ref=e19] [cursor=pointer]:
+        - /url: https://i.imgur.com/RMIaqfU.jpeg
+      - text: 5/14(四)台北北平東路
+      - link "https://i.imgur.com/qoKqJks.jpeg" [ref=e20] [cursor=pointer]:
+        - /url: https://i.imgur.com/qoKqJks.jpeg
+      - text: 5/16（六)台北信義威秀
+      - link "https://i.imgur.com/oHtbeHY.jpeg" [ref=e21] [cursor=pointer]:
+        - /url: https://i.imgur.com/oHtbeHY.jpeg
+      - text: 5/22(五)台北南港各指定捐血點
+      - link "https://i.imgur.com/cTo5e0R.jpeg" [ref=e22] [cursor=pointer]:
+        - /url: https://i.imgur.com/cTo5e0R.jpeg
+      - text: 5/22(五)台北松山三民路
+      - link "https://i.imgur.com/5kYbcFp.jpeg" [ref=e23] [cursor=pointer]:
+        - /url: https://i.imgur.com/5kYbcFp.jpeg
+      - text: 5/30(六)、6/12(五)、8/8(六)、9/6(日)、9/11(五)、 10/9(五)、10/23(五)、11/29(日)、12/25(五)台北松壽路16巷愛迪達旁
+      - link "https://i.imgur.com/SQL9Y7F.jpeg" [ref=e24] [cursor=pointer]:
+        - /url: https://i.imgur.com/SQL9Y7F.jpeg
+      - text: 6/5(五)、9/4(五)、12/4(五)台北公館捷運站一號出口
+      - link "https://i.imgur.com/3cmkN8b.jpeg" [ref=e25] [cursor=pointer]:
+        - /url: https://i.imgur.com/3cmkN8b.jpeg
+      - link "https://i.imgur.com/ebExwKq.jpeg" [ref=e26] [cursor=pointer]:
+        - /url: https://i.imgur.com/ebExwKq.jpeg
+      - text: 6/7(日)台北南港富南宮
+      - link "https://i.imgur.com/FGmBwsb.jpeg" [ref=e27] [cursor=pointer]:
+        - /url: https://i.imgur.com/FGmBwsb.jpeg
+      - text: 6/14(日)台北西門町紅樓
+      - link "https://i.imgur.com/waLWmBY.jpeg" [ref=e28] [cursor=pointer]:
+        - /url: https://i.imgur.com/waLWmBY.jpeg
+      - text: 即日起於樹林捐血站捐血成功，加贈湯品兌換券一份(送完為止)
+      - link "https://i.imgur.com/W8V9fbF.jpeg" [ref=e29] [cursor=pointer]:
+        - /url: https://i.imgur.com/W8V9fbF.jpeg
+      - text: 5月-6月每週一，三重捐血室 每日前15名 全血500cc捐血成功者送火鍋券1張(送完為止)
+      - link "https://i.imgur.com/IlAEkCB.jpeg" [ref=e30] [cursor=pointer]:
+        - /url: https://i.imgur.com/IlAEkCB.jpeg
+      - text: 5/17(日)新北新莊光華派出所旁
+      - link "https://i.imgur.com/W0rZSW7.jpeg" [ref=e31] [cursor=pointer]:
+        - /url: https://i.imgur.com/W0rZSW7.jpeg
+      - text: 5/21(四)新北新店矽谷園區二期
+      - link "https://i.imgur.com/HkSB4uX.jpeg" [ref=e32] [cursor=pointer]:
+        - /url: https://i.imgur.com/HkSB4uX.jpeg
+      - text: 5/21(四)新北新店技嘉科技
+      - link "https://i.imgur.com/tqHFIdy.jpeg" [ref=e33] [cursor=pointer]:
+        - /url: https://i.imgur.com/tqHFIdy.jpeg
+      - text: 5/23(六)新北三重三和國中
+      - link "https://i.imgur.com/t4seh8Q.jpeg" [ref=e34] [cursor=pointer]:
+        - /url: https://i.imgur.com/t4seh8Q.jpeg
+      - text: 5/23(六)新北汐止火車站前
+      - link "https://i.imgur.com/o1jwwGa.jpeg" [ref=e35] [cursor=pointer]:
+        - /url: https://i.imgur.com/o1jwwGa.jpeg
+      - text: 5/24(日)新北金山金包里慈護宮
+      - link "https://i.imgur.com/UZ6v1tm.jpeg" [ref=e36] [cursor=pointer]:
+        - /url: https://i.imgur.com/UZ6v1tm.jpeg
+      - text: ●桃園/新竹/苗栗 Ａ Ｂ Ｏ ＡＢ 5/15(五)桃園/南門捐血室
+      - link "https://i.imgur.com/HHejqZZ.jpeg" [ref=e37] [cursor=pointer]:
+        - /url: https://i.imgur.com/HHejqZZ.jpeg
+      - text: 5/16(六)桃園同德六街捐血亭
+      - link "https://i.imgur.com/xoZ94Wq.jpeg" [ref=e38] [cursor=pointer]:
+        - /url: https://i.imgur.com/xoZ94Wq.jpeg
+      - text: 5/19(二）桃園大園航翔路
+      - link "https://i.imgur.com/uOJB64J.jpeg" [ref=e39] [cursor=pointer]:
+        - /url: https://i.imgur.com/uOJB64J.jpeg
+      - text: 5/23(六)桃園蘆竹大竹興仁活動中心
+      - link "https://i.imgur.com/qCiFt8f.jpeg" [ref=e40] [cursor=pointer]:
+        - /url: https://i.imgur.com/qCiFt8f.jpeg
+      - text: 6/5(五)桃園平鎮上海路
+      - link "https://i.imgur.com/eH293xN.jpeg" [ref=e41] [cursor=pointer]:
+        - /url: https://i.imgur.com/eH293xN.jpeg
+      - text: 6/19(五)桃園龍潭梅龍路（線上報名：
+      - link "https://forms.gle/tAfeFyt1gZ9bYgNQ6" [ref=e42] [cursor=pointer]:
+        - /url: https://forms.gle/tAfeFyt1gZ9bYgNQ6
+      - text: ）
+      - link "https://i.imgur.com/GrzZPWA.jpeg" [ref=e43] [cursor=pointer]:
+        - /url: https://i.imgur.com/GrzZPWA.jpeg
+      - text: 7/5(日)桃園大有國中
+      - link "https://i.imgur.com/jtkTzpW.jpeg" [ref=e44] [cursor=pointer]:
+        - /url: https://i.imgur.com/jtkTzpW.jpeg
+      - text: 5/15(五)新竹東區大學路
+      - link "https://i.imgur.com/jbFSdW1.jpeg" [ref=e45] [cursor=pointer]:
+        - /url: https://i.imgur.com/jbFSdW1.jpeg
+      - text: 5/30(六)竹北愛心樓
+      - link "https://i.imgur.com/HZU1G7a.jpeg" [ref=e46] [cursor=pointer]:
+        - /url: https://i.imgur.com/HZU1G7a.jpeg
+      - text: 5/17(日)苗栗竹南捐血室
+      - link "https://i.imgur.com/gZIGjRj.jpeg" [ref=e47] [cursor=pointer]:
+        - /url: https://i.imgur.com/gZIGjRj.jpeg
+      - text: 7/11(六)苗栗竹南捐血室
+      - link "https://i.imgur.com/KuTIPZT.jpeg" [ref=e48] [cursor=pointer]:
+        - /url: https://i.imgur.com/KuTIPZT.jpeg
+      - text: ●台中/彰化/南投/雲林 Ａ Ｂ Ｏ ＡＢ 5/3(日)-5/27(三)台中各指定捐血點，捐血送薰衣草森林入園券1張/2張
+      - link "https://i.imgur.com/B2opueN.jpeg" [ref=e49] [cursor=pointer]:
+        - /url: https://i.imgur.com/B2opueN.jpeg
+      - text: 5/15(五)台中惠安停車場
+      - link "https://i.imgur.com/wtahznm.jpeg" [ref=e50] [cursor=pointer]:
+        - /url: https://i.imgur.com/wtahznm.jpeg
+      - text: 5/15(五)台中中港捐血室
+      - link "https://i.imgur.com/0UiSVOP.jpeg" [ref=e51] [cursor=pointer]:
+        - /url: https://i.imgur.com/0UiSVOP.jpeg
+      - text: 5/15(五)台中龍井區公所
+      - link "https://i.imgur.com/8qDUYSG.jpeg" [ref=e52] [cursor=pointer]:
+        - /url: https://i.imgur.com/8qDUYSG.jpeg
+      - text: 5/16(六)台中西屯台灣大道四段
+      - link "https://i.imgur.com/b5iWXG4.jpeg" [ref=e53] [cursor=pointer]:
+        - /url: https://i.imgur.com/b5iWXG4.jpeg
+      - text: 5/16(六)台中神岡順濟宮
+      - link "https://i.imgur.com/53AwHUC.jpeg" [ref=e54] [cursor=pointer]:
+        - /url: https://i.imgur.com/53AwHUC.jpeg
+      - text: 5/16(六)台中豐原捐血室
+      - link "https://i.imgur.com/OAAU9Dg.jpeg" [ref=e55] [cursor=pointer]:
+        - /url: https://i.imgur.com/OAAU9Dg.jpeg
+      - text: 5/16(六)台中西區應天宮
+      - link "https://i.imgur.com/3zd8Smf.jpeg" [ref=e56] [cursor=pointer]:
+        - /url: https://i.imgur.com/3zd8Smf.jpeg
+      - text: 5/23(六)台中霧峰農會
+      - link "https://i.imgur.com/TWVfJpv.jpeg" [ref=e57] [cursor=pointer]:
+        - /url: https://i.imgur.com/TWVfJpv.jpeg
+      - text: 5/23(六)台中港酒店
+      - link "https://i.imgur.com/HBoIqZH.jpeg" [ref=e58] [cursor=pointer]:
+        - /url: https://i.imgur.com/HBoIqZH.jpeg
+      - text: 5/23(六)台中南屯永春路
+      - link "https://i.imgur.com/LO9pHvM.jpeg" [ref=e59] [cursor=pointer]:
+        - /url: https://i.imgur.com/LO9pHvM.jpeg
+      - text: 5/30(六)台中海線捐血室
+      - link "https://i.imgur.com/Ne1n4F6.jpeg" [ref=e60] [cursor=pointer]:
+        - /url: https://i.imgur.com/Ne1n4F6.jpeg
+      - text: 5/30(六)台中大里慈善路
+      - link "https://i.imgur.com/yAsb8J8.jpeg" [ref=e61] [cursor=pointer]:
+        - /url: https://i.imgur.com/yAsb8J8.jpeg
+      - text: 5/30(六)台中南區復興路一段
+      - link "https://i.imgur.com/Z743jBt.jpeg" [ref=e62] [cursor=pointer]:
+        - /url: https://i.imgur.com/Z743jBt.jpeg
+      - text: 5/31(日)台中南屯文心南六路
+      - link "https://i.imgur.com/UH9qSaw.jpeg" [ref=e63] [cursor=pointer]:
+        - /url: https://i.imgur.com/UH9qSaw.jpeg
+      - text: 6/6(六)台中潭子祥和路
+      - link "https://i.imgur.com/BitnIPN.jpeg" [ref=e64] [cursor=pointer]:
+        - /url: https://i.imgur.com/BitnIPN.jpeg
+      - text: 6/7(日)台中新社受奉宮
+      - link "https://i.imgur.com/gkFUCCC.jpeg" [ref=e65] [cursor=pointer]:
+        - /url: https://i.imgur.com/gkFUCCC.jpeg
+      - text: 6/14(日)台中大里瑞城國小
+      - link "https://i.imgur.com/9AYf4iB.jpeg" [ref=e66] [cursor=pointer]:
+        - /url: https://i.imgur.com/9AYf4iB.jpeg
+      - text: 7/18(六)台中太平聖濟宮
+      - link "https://i.imgur.com/u91VOer.jpeg" [ref=e67] [cursor=pointer]:
+        - /url: https://i.imgur.com/u91VOer.jpeg
+      - text: 9/12(六)台中公園捐血車
+      - link "https://i.imgur.com/D0gRPKs.jpeg" [ref=e68] [cursor=pointer]:
+        - /url: https://i.imgur.com/D0gRPKs.jpeg
+      - text: 5/10-5/17(日-日)彰化員林捐血站
+      - link "https://i.imgur.com/988LlWI.jpeg" [ref=e69] [cursor=pointer]:
+        - /url: https://i.imgur.com/988LlWI.jpeg
+      - text: 5/11-5/15(一-五)彰化捐血站
+      - link "https://i.imgur.com/7zGakUT.jpeg" [ref=e70] [cursor=pointer]:
+        - /url: https://i.imgur.com/7zGakUT.jpeg
+      - text: 5/16(六)彰化社頭鄉公所
+      - link "https://i.imgur.com/ncco1s7.jpeg" [ref=e71] [cursor=pointer]:
+        - /url: https://i.imgur.com/ncco1s7.jpeg
+      - text: 5/17(日)彰化福興鄉公所
+      - link "https://i.imgur.com/9cwHlWk.jpeg" [ref=e72] [cursor=pointer]:
+        - /url: https://i.imgur.com/9cwHlWk.jpeg
+      - text: 5/17(日)彰化花壇圖書館
+      - link "https://i.imgur.com/udkDZQY.jpeg" [ref=e73] [cursor=pointer]:
+        - /url: https://i.imgur.com/udkDZQY.jpeg
+      - text: 5/25(一)彰化保四總隊精誠樓/彰化縣警察局
+      - link "https://i.imgur.com/CUxLKOf.jpeg" [ref=e74] [cursor=pointer]:
+        - /url: https://i.imgur.com/CUxLKOf.jpeg
+      - text: 5/26(二)、8/26(三)、11/26(四)彰化昭輝實業
+      - link "https://i.imgur.com/05zw8g3.jpeg" [ref=e75] [cursor=pointer]:
+        - /url: https://i.imgur.com/05zw8g3.jpeg
+      - text: 5/27(三)、6/27(六)彰化和美龍華慈惠堂
+      - link "https://i.imgur.com/HZNgyZ7.jpeg" [ref=e76] [cursor=pointer]:
+        - /url: https://i.imgur.com/HZNgyZ7.jpeg
+      - text: 5/31(日)彰化火車站
+      - link "https://i.imgur.com/JSdbXHD.jpeg" [ref=e77] [cursor=pointer]:
+        - /url: https://i.imgur.com/JSdbXHD.jpeg
+      - text: 6/2(二)彰化埤頭合興宮
+      - link "https://i.imgur.com/ZziZibM.jpeg" [ref=e78] [cursor=pointer]:
+        - /url: https://i.imgur.com/ZziZibM.jpeg
+      - text: 6/11(四)彰化溪湖糖廠
+      - link "https://i.imgur.com/9NFGVec.jpeg" [ref=e79] [cursor=pointer]:
+        - /url: https://i.imgur.com/9NFGVec.jpeg
+      - text: 5月 南投紫南宮（送馬銀錢母/馬金銀錢母各一）
+      - link "https://i.imgur.com/I5wdymF.jpeg" [ref=e80] [cursor=pointer]:
+        - /url: https://i.imgur.com/I5wdymF.jpeg
+      - text: 即日起-6月中，紫南宮捐血車移至消防訓練中心停車場
+      - link "https://i.imgur.com/dLhLv4j.jpeg" [ref=e81] [cursor=pointer]:
+        - /url: https://i.imgur.com/dLhLv4j.jpeg
+      - text: 6/16(二)南投草屯太濟宮
+      - link "https://i.imgur.com/mA8CaTP.jpeg" [ref=e82] [cursor=pointer]:
+        - /url: https://i.imgur.com/mA8CaTP.jpeg
+      - text: 5/14(四)雲林崙背大有永安宮
+      - link "https://i.imgur.com/jYRMkHK.jpeg" [ref=e83] [cursor=pointer]:
+        - /url: https://i.imgur.com/jYRMkHK.jpeg
+      - text: 5/17(日)雲林西螺國中
+      - link "https://i.imgur.com/0Bv0y1L.jpeg" [ref=e84] [cursor=pointer]:
+        - /url: https://i.imgur.com/0Bv0y1L.jpeg
+      - text: 6/7(日)雲林斗南明昌路
+      - link "https://i.imgur.com/sUldQth.jpeg" [ref=e85] [cursor=pointer]:
+        - /url: https://i.imgur.com/sUldQth.jpeg
+      - text: 6/13(六)雲林六房天上聖母115-116年斗南股紅壇
+      - link "https://i.imgur.com/JClyGUA.jpeg" [ref=e86] [cursor=pointer]:
+        - /url: https://i.imgur.com/JClyGUA.jpeg
+      - text: 6/27(六)雲林捐血站
+      - link "https://i.imgur.com/GNBEDHb.jpeg" [ref=e87] [cursor=pointer]:
+        - /url: https://i.imgur.com/GNBEDHb.jpeg
+      - text: ●嘉義/台南/高雄/屏東/台東 Ａ Ｂ Ｏ ＡＢ 5/15(五)嘉義醫院
+      - link "https://i.imgur.com/g9yLJBF.jpeg" [ref=e88] [cursor=pointer]:
+        - /url: https://i.imgur.com/g9yLJBF.jpeg
+      - text: 5/27(三)嘉義東園軒園林餐廳/垂楊捐血室/嘉義捐血站
+      - link "https://i.imgur.com/1MhztXz.jpeg" [ref=e89] [cursor=pointer]:
+        - /url: https://i.imgur.com/1MhztXz.jpeg
+      - text: 5/6-6/30週一、二、三、五於台南新營捐血室預約捐血並準時報到，即贈黑熊法蘭絨毛毯乙 件
+      - link "https://i.imgur.com/6WYieYv.jpeg" [ref=e90] [cursor=pointer]:
+        - /url: https://i.imgur.com/6WYieYv.jpeg
+      - text: 5/16(六)台南善化區農會
+      - link "https://i.imgur.com/jmQPW9I.jpeg" [ref=e91] [cursor=pointer]:
+        - /url: https://i.imgur.com/jmQPW9I.jpeg
+      - text: 5/16(六)台南大灣廣護宮
+      - link "https://i.imgur.com/yWvZQY3.jpeg" [ref=e92] [cursor=pointer]:
+        - /url: https://i.imgur.com/yWvZQY3.jpeg
+      - text: 5/16-5/17(六-日)台南新營捐血室
+      - link "https://i.imgur.com/oZNoXi5.jpeg" [ref=e93] [cursor=pointer]:
+        - /url: https://i.imgur.com/oZNoXi5.jpeg
+      - text: 5/17(日)台南延平郡王祠/市立博物館前
+      - link "https://i.imgur.com/0qw0xrC.jpeg" [ref=e94] [cursor=pointer]:
+        - /url: https://i.imgur.com/0qw0xrC.jpeg
+      - text: 5/17(日)台南永福捐血室
+      - link "https://i.imgur.com/YBByMk3.jpeg" [ref=e95] [cursor=pointer]:
+        - /url: https://i.imgur.com/YBByMk3.jpeg
+      - text: 5/17(日)台南東興捐血室
+      - link "https://i.imgur.com/QSPuCf5.jpeg" [ref=e96] [cursor=pointer]:
+        - /url: https://i.imgur.com/QSPuCf5.jpeg
+      - text: 5/17(日)台南關廟山西宮
+      - link "https://i.imgur.com/yUaAlfb.jpeg" [ref=e97] [cursor=pointer]:
+        - /url: https://i.imgur.com/yUaAlfb.jpeg
+      - text: 5/17(日)台南中西民生路二段
+      - link "https://i.imgur.com/lx0o6d5.jpeg" [ref=e98] [cursor=pointer]:
+        - /url: https://i.imgur.com/lx0o6d5.jpeg
+      - text: 5/22(五)台南麻豆分局
+      - link "https://i.imgur.com/dyn08L8.jpeg" [ref=e99] [cursor=pointer]:
+        - /url: https://i.imgur.com/dyn08L8.jpeg
+      - text: 5/24(日)台南喜樹代天府
+      - link "https://i.imgur.com/zVoZltH.jpeg" [ref=e100] [cursor=pointer]:
+        - /url: https://i.imgur.com/zVoZltH.jpeg
+      - text: 5/24(日)台南蘇厝長興宮
+      - link "https://i.imgur.com/RLzOvOn.jpeg" [ref=e101] [cursor=pointer]:
+        - /url: https://i.imgur.com/RLzOvOn.jpeg
+      - text: 5/30(六)台南轉運站對面
+      - link "https://i.imgur.com/nasWlOB.jpeg" [ref=e102] [cursor=pointer]:
+        - /url: https://i.imgur.com/nasWlOB.jpeg
+      - text: 5/30(六)台南中西尊王路
+      - link "https://i.imgur.com/LHE6t2X.jpeg" [ref=e103] [cursor=pointer]:
+        - /url: https://i.imgur.com/LHE6t2X.jpeg
+      - text: 6/7(日)台南六甲國小
+      - link "https://i.imgur.com/FOVidLT.jpeg" [ref=e104] [cursor=pointer]:
+        - /url: https://i.imgur.com/FOVidLT.jpeg
+      - text: 5/14(四)高雄旗山鼓山公園
+      - link "https://i.imgur.com/2LqmuG5.jpeg" [ref=e105] [cursor=pointer]:
+        - /url: https://i.imgur.com/2LqmuG5.jpeg
+      - text: 5/14(四)高雄美濃區公所
+      - link "https://i.imgur.com/yVOXJcH.jpeg" [ref=e106] [cursor=pointer]:
+        - /url: https://i.imgur.com/yVOXJcH.jpeg
+      - text: 5/14(四)高雄漢神巨蛋
+      - link "https://i.imgur.com/SmUL6jk.jpeg" [ref=e107] [cursor=pointer]:
+        - /url: https://i.imgur.com/SmUL6jk.jpeg
+      - text: 5/16(六)高雄小港中山國中
+      - link "https://i.imgur.com/SznlRcr.jpeg" [ref=e108] [cursor=pointer]:
+        - /url: https://i.imgur.com/SznlRcr.jpeg
+      - text: 5/16(六)高雄岡山捐血室
+      - link "https://i.imgur.com/iy9ZsYr.jpeg" [ref=e109] [cursor=pointer]:
+        - /url: https://i.imgur.com/iy9ZsYr.jpeg
+      - text: 5/16(六)高雄左營捐血室
+      - link "https://i.imgur.com/uq1DS4F.jpeg" [ref=e110] [cursor=pointer]:
+        - /url: https://i.imgur.com/uq1DS4F.jpeg
+      - text: 5/17(日)高雄楠梓國昌國中
+      - link "https://i.imgur.com/FO6GRIj.jpeg" [ref=e111] [cursor=pointer]:
+        - /url: https://i.imgur.com/FO6GRIj.jpeg
+      - text: 5/17(日)高雄九如捐血室
+      - link "https://i.imgur.com/y9rKwsP.jpeg" [ref=e112] [cursor=pointer]:
+        - /url: https://i.imgur.com/y9rKwsP.jpeg
+      - text: 5/17(日)高雄五甲捐血室
+      - link "https://i.imgur.com/YFePQ1u.jpeg" [ref=e113] [cursor=pointer]:
+        - /url: https://i.imgur.com/YFePQ1u.jpeg
+      - text: 5/17(日)高雄大順與建工路口
+      - link "https://i.imgur.com/8ig5J18.jpeg" [ref=e114] [cursor=pointer]:
+        - /url: https://i.imgur.com/8ig5J18.jpeg
+      - text: 5/17(日)高雄鼎泰廣場公園
+      - link "https://i.imgur.com/TFUOabs.jpeg" [ref=e115] [cursor=pointer]:
+        - /url: https://i.imgur.com/TFUOabs.jpeg
+      - text: 5/17(日)高雄前鎮籬仔內路中廟千秋府
+      - link "https://i.imgur.com/kFvIS1x.jpeg" [ref=e116] [cursor=pointer]:
+        - /url: https://i.imgur.com/kFvIS1x.jpeg
+      - text: 5/19(二)高雄前鎮中鋼總部大樓
+      - link "https://i.imgur.com/1Cuq1ny.jpeg" [ref=e117] [cursor=pointer]:
+        - /url: https://i.imgur.com/1Cuq1ny.jpeg
+      - text: 5/21(四)高雄路竹區公所
+      - link "https://i.imgur.com/xdWI21n.jpeg" [ref=e118] [cursor=pointer]:
+        - /url: https://i.imgur.com/xdWI21n.jpeg
+      - text: 5/23(六)高雄仁武大灣國中
+      - link "https://i.imgur.com/rIOfn7X.jpeg" [ref=e119] [cursor=pointer]:
+        - /url: https://i.imgur.com/rIOfn7X.jpeg
+      - text: 5/31(日)高雄左營啟明堂
+      - link "https://i.imgur.com/OjlSKpO.jpeg" [ref=e120] [cursor=pointer]:
+        - /url: https://i.imgur.com/OjlSKpO.jpeg
+      - text: 6/20(六)、9/26(六)、12/20(日)高雄關帝廟
+      - link "https://i.imgur.com/buDCgXe.jpeg" [ref=e121] [cursor=pointer]:
+        - /url: https://i.imgur.com/buDCgXe.jpeg
+      - text: 5/15(五)屏東捐血站
+      - link "https://i.imgur.com/7AVzM2H.jpeg" [ref=e122] [cursor=pointer]:
+        - /url: https://i.imgur.com/7AVzM2H.jpeg
+      - text: 6/9(二)屏東警察局東港分局
+      - link "https://i.imgur.com/BiyvKXb.jpeg" [ref=e123] [cursor=pointer]:
+        - /url: https://i.imgur.com/BiyvKXb.jpeg
+      - text: 8/22(六)、12/19(六)屏東社皮三清宮（送福德正神招財錢母）
+      - link "https://i.imgur.com/ngd5n4D.jpeg" [ref=e124] [cursor=pointer]:
+        - /url: https://i.imgur.com/ngd5n4D.jpeg
+      - text: ●宜蘭/花蓮/離島 5/14(四)宜蘭東嶽廟
+      - link "https://i.imgur.com/5KaevCH.jpeg" [ref=e125] [cursor=pointer]:
+        - /url: https://i.imgur.com/5KaevCH.jpeg
+      - text: 5/15(五)宜蘭三星分局
+      - link "https://i.imgur.com/LE9H2Kb.jpeg" [ref=e126] [cursor=pointer]:
+        - /url: https://i.imgur.com/LE9H2Kb.jpeg
+      - text: 5/16(六)宜蘭羅東轉運站
+      - link "https://i.imgur.com/ncEHPAq.jpeg" [ref=e127] [cursor=pointer]:
+        - /url: https://i.imgur.com/ncEHPAq.jpeg
+      - text: 5/17(日)宜蘭羅東民眾服務站
+      - link "https://i.imgur.com/JrByLp5.jpeg" [ref=e128] [cursor=pointer]:
+        - /url: https://i.imgur.com/JrByLp5.jpeg
+      - text: 5/15(五)花蓮玉里圓環
+      - link "https://i.imgur.com/vvrmP2p.jpeg" [ref=e129] [cursor=pointer]:
+        - /url: https://i.imgur.com/vvrmP2p.jpeg
+      - text: ●全台/區域活動 即日起-11/30於台中捐血中心轄區內定點捐血集點達3次，即可兌換「血袋造型抱枕」乙個 （每人限兌換一次，換完為止） 活動網址：
+      - link "https://reurl.cc/NNmj1q" [ref=e130] [cursor=pointer]:
+        - /url: https://reurl.cc/NNmj1q
+      - link "https://i.imgur.com/w7rIJLT.jpeg" [ref=e131] [cursor=pointer]:
+        - /url: https://i.imgur.com/w7rIJLT.jpeg
+      - link "https://i.imgur.com/Vu7OFHA.png" [ref=e132] [cursor=pointer]:
+        - /url: https://i.imgur.com/Vu7OFHA.png
+      - text: 1/19-12/31於高雄捐血中心轄區內捐血並累積集點達三次(其中至少一次須於轄區 內之固定捐血點或巡迴捐血車完成)，即可兌換 限量台灣黑熊不鏽鋼隨身瓶 一個 捐全血250cc得1點，500cc得2點 詳細活動說明請見網站：
+      - link "https://reurl.cc/MMGqqm" [ref=e133] [cursor=pointer]:
+        - /url: https://reurl.cc/MMGqqm
+      - link "https://i.imgur.com/4Ru8C24.jpeg" [ref=e134] [cursor=pointer]:
+        - /url: https://i.imgur.com/4Ru8C24.jpeg
+      - link "https://i.imgur.com/FJNQIEY.jpeg" [ref=e135] [cursor=pointer]:
+        - /url: https://i.imgur.com/FJNQIEY.jpeg
+      - text: "-- ※ 發信站: 批踢踢實業坊(ptt.cc), 來自: 218.164.7.183 (臺灣) ※ 文章網址:"
+      - link "https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html" [ref=e136] [cursor=pointer]:
+        - /url: https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html
+      - generic [ref=e137]:
+        - generic [ref=e138]: 推
+        - text: "KirkSynder: 推 捐全血可用於各種重大手術產婦車禍"
+        - generic [ref=e139]: 42.70.175.20 01/03 00:44
+      - generic [ref=e140]:
+        - generic [ref=e141]: →
+        - text: "KirkSynder: …… 血小板可用於化療白血病……助人"
+        - generic [ref=e142]: 42.70.175.20 01/03 00:44
+      - generic [ref=e143]:
+        - generic [ref=e144]: →
+        - text: "KirkSynder: 我助己記得要睡飽多喝水避免油膩食物"
+        - generic [ref=e145]: 42.70.175.20 01/03 00:44
+      - generic [ref=e146]:
+        - generic [ref=e147]: →
+        - text: "KirkSynder: 以免乳糜血"
+        - generic [ref=e148]: 42.70.175.20 01/03 00:45
+      - generic [ref=e149]:
+        - generic [ref=e150]: 推
+        - text: "Takasteric: 捐血送烏魚子好猛，是一整片嗎"
+        - generic [ref=e151]: 124.109.115.135 01/03 01:06
+      - generic [ref=e152]:
+        - generic [ref=e153]: 推
+        - text: "kamihio: 推 善心"
+        - generic [ref=e154]: 101.10.243.210 01/03 01:53
+      - generic [ref=e155]:
+        - generic [ref=e156]: 推
+        - text: "shawn0205: 115年01/10（六） 新北樹林區崑崙公園"
+        - generic [ref=e157]: 101.10.243.245 01/03 05:24
+      - generic [ref=e158]:
+        - generic [ref=e159]: →
+        - text: "shawn0205: 捐250 送300家樂福禮卷 500cc送700"
+        - generic [ref=e160]: 101.10.243.245 01/03 05:24
+      - text: 有新增了感謝！方便的話附上圖片更好～～
+      - generic [ref=e161]:
+        - generic [ref=e162]: 推
+        - text: "NEWOLD: 彰化有捐血250cc送500禮券 500cc送1000禮"
+        - generic [ref=e163]: 61.228.82.212 01/03 06:22
+      - generic [ref=e164]:
+        - generic [ref=e165]: →
+        - text: "NEWOLD: 券"
+        - generic [ref=e166]: 61.228.82.212 01/03 06:22
+      - generic [ref=e167]:
+        - generic [ref=e168]: →
+        - text: "NEWOLD: 花蓮還有送櫻桃鴨一隻跟其他贈品的"
+        - generic [ref=e169]: 61.228.82.212 01/03 06:23
+      - generic [ref=e170]:
+        - generic [ref=e171]: →
+        - text: "NEWOLD: 馬公有250cc送400元 500cc送800元"
+        - generic [ref=e172]: 61.228.82.212 01/03 06:24
+      - generic [ref=e173]:
+        - generic [ref=e174]: 推
+        - text: "tmuaircat: 推 南投都沒有"
+        - generic [ref=e175]: 125.231.196.177 01/03 06:56
+      - generic [ref=e176]:
+        - generic [ref=e177]: 推
+        - text: "jasop: 有能力捐就去吧 只能推了"
+        - generic [ref=e178]: 125.231.200.35 01/03 07:02
+      - text: 我也是不能捐只能拋磚引玉了(￣▽￣)
+      - generic [ref=e179]:
+        - generic [ref=e180]: 推
+        - text: "IOU9527: 秀朗橋的正在排隊，已經發到七八百號了"
+        - generic [ref=e181]: 27.240.170.249 01/03 09:27
+      - generic [ref=e182]:
+        - generic [ref=e183]: 推
+        - text: "chiangmh: 善"
+        - generic [ref=e184]: 101.9.34.233 01/03 09:47
+      - generic [ref=e185]:
+        - generic [ref=e186]: 推
+        - text: "exrana: 便宜賣血"
+        - generic [ref=e187]: 114.33.166.72 01/03 09:49
+      - generic [ref=e188]:
+        - generic [ref=e189]: 推
+        - text: yamiyami
+        - generic [ref=e190]:
+          - text: ":"
+          - link "https://i.mopix.cc/H5N7ZC.jpg" [ref=e191] [cursor=pointer]:
+            - /url: https://i.mopix.cc/H5N7ZC.jpg
+        - generic [ref=e192]: 1.161.19.253 01/03 09:57
+      - generic [ref=e194]:
+        - generic [ref=e195]: 推
+        - text: "yamiyami: 昨天捐中和金樹的，今天還ㄧ天"
+        - generic [ref=e196]: 1.161.19.253 01/03 09:59
+      - generic [ref=e197]:
+        - generic [ref=e198]: →
+        - text: "inyo: 水很深"
+        - generic [ref=e199]: 150.117.204.121 01/03 10:47
+      - generic [ref=e200]:
+        - generic [ref=e201]: 推
+        - text: "showhere: 捐血可以排Phas和Pfos，鼓勵大家"
+        - generic [ref=e202]: 36.227.96.66 01/03 13:17
+      - generic [ref=e203]:
+        - generic [ref=e204]: →
+        - text: "showhere: phas"
+        - generic [ref=e205]: 36.227.96.66 01/03 13:18
+      - generic [ref=e206]:
+        - generic [ref=e207]: 推
+        - text: "lolicat: 現在連捐個血都要預約了"
+        - generic [ref=e208]: 49.215.241.16 01/03 13:47
+      - generic [ref=e209]:
+        - generic [ref=e210]: 推
+        - text: "SkySwimmer: CD中 幫推"
+        - generic [ref=e211]: 42.77.230.18 01/03 14:35
+      - generic [ref=e212]:
+        - generic [ref=e213]: 推
+        - text: "bettybuy: 等王品"
+        - generic [ref=e214]: 106.64.160.82 01/03 16:05
+      - generic [ref=e215]:
+        - generic [ref=e216]: 推
+        - text: "Ron51320: 最近幾次捐500完後都很容易感冒=.="
+        - generic [ref=e217]: 101.14.3.245 01/03 18:30
+      - generic [ref=e218]:
+        - generic [ref=e219]: →
+        - text: "x173109: 樓上請問彰化1000元在哪裡"
+        - generic [ref=e220]: 111.71.213.220 01/03 19:22
+      - generic [ref=e221]:
+        - generic [ref=e222]: 推
+        - text: "hoverfall: 感謝整理"
+        - generic [ref=e223]: 49.215.57.177 01/03 19:25
+      - generic [ref=e224]:
+        - generic [ref=e225]: 推
+        - text: "KCinTW: 請問2月何時會發當年生肖紀念幣？"
+        - generic [ref=e226]: 180.218.129.109 01/03 19:41
+      - text: 不曉得，有出的話我在另外文字標示
+      - generic [ref=e227]:
+        - generic [ref=e228]: 推
+        - text: "adam054457: 推"
+        - generic [ref=e229]: 182.233.151.22 01/03 22:54
+      - generic [ref=e230]:
+        - generic [ref=e231]: 推
+        - text: "Tristanh: 推用心整理"
+        - generic [ref=e232]: 219.70.97.62 01/03 23:01
+      - generic [ref=e233]:
+        - generic [ref=e234]: 推
+        - text: "TSMG: 謝謝整理"
+        - generic [ref=e235]: 1.162.120.137 01/04 01:17
+      - generic [ref=e236]:
+        - generic [ref=e237]: →
+        - text: "tshu: 餐券兩張入手，感謝資訊"
+        - generic [ref=e238]: 49.215.234.245 01/04 10:47
+      - generic [ref=e239]:
+        - generic [ref=e240]: 推
+        - text: "OwlO: 推"
+        - generic [ref=e241]: 49.217.200.23 01/04 12:02
+      - generic [ref=e242]:
+        - generic [ref=e243]: 推
+        - text: "Sensibility: 用心"
+        - generic [ref=e244]: 101.10.76.153 01/04 21:12
+      - generic [ref=e245]:
+        - generic [ref=e246]: 推
+        - text: "lulalachan: 推用心整理！"
+        - generic [ref=e247]: 118.160.129.201 01/05 07:58
+      - generic [ref=e248]:
+        - generic [ref=e249]: 推
+        - text: "keerily: 推用心"
+        - generic [ref=e250]: 60.251.199.140 01/05 08:49
+      - generic [ref=e251]:
+        - generic [ref=e252]: 推
+        - text: "humanskull: 台中商務中心還有舉辦捐血活動嗎？"
+        - generic [ref=e253]: 49.215.223.135 01/08 18:09
+      - text: 有唷，今天1/9
+      - link "https://i.imgur.com/Mu7nv8c.jpeg" [ref=e254] [cursor=pointer]:
+        - /url: https://i.imgur.com/Mu7nv8c.jpeg
+      - generic [ref=e255]:
+        - generic [ref=e256]: 推
+        - text: "e840329: 1/27 西門峨嵋捐血車舉辦捐血活動 六師"
+        - generic [ref=e257]: 114.44.49.75 01/09 08:41
+      - generic [ref=e258]:
+        - generic [ref=e259]: →
+        - text: "e840329: 公會送好禮"
+        - generic [ref=e260]: 114.44.49.75 01/09 08:41
+      - generic [ref=e261]:
+        - generic [ref=e262]: →
+        - text: e840329
+        - generic [ref=e263]:
+          - text: ":"
+          - link "https://i.mopix.cc/ZhhfWJ.jpg" [ref=e264] [cursor=pointer]:
+            - /url: https://i.mopix.cc/ZhhfWJ.jpg
+        - generic [ref=e265]: 114.44.49.75 01/09 08:41
+      - text: 感謝分享，已新增～
+      - generic [ref=e267]:
+        - generic [ref=e268]: 推
+        - text: "fensuishingu: 推一個台北松壽路16巷愛迪達旁那個"
+        - generic [ref=e269]: 42.73.254.120 01/09 14:08
+      - generic [ref=e270]:
+        - generic [ref=e271]: →
+        - text: "fensuishingu: 今天捐500 不止電影票還有贈品"
+        - generic [ref=e272]: 42.73.254.120 01/09 14:08
+      - text: 讚讚
+      - generic [ref=e273]:
+        - generic [ref=e274]: 推
+        - text: "GGTV: 今天樹林那個送禮券700第一次收到這麼多，還"
+        - generic [ref=e275]: 101.12.233.197 01/10 12:55
+      - generic [ref=e276]:
+        - generic [ref=e277]: →
+        - text: "GGTV: 送馬克杯組白色，沒有印字體，好高級"
+        - generic [ref=e278]: 101.12.233.197 01/10 12:55
+      - generic [ref=e279]:
+        - generic [ref=e280]: →
+        - text: GGTV
+        - generic [ref=e281]:
+          - text: ":"
+          - link "http://i.imgur.com/ocC5dWJ.jpg" [ref=e282] [cursor=pointer]:
+            - /url: http://i.imgur.com/ocC5dWJ.jpg
+        - generic [ref=e283]: 101.12.233.197 01/10 12:56
+      - text: 讚讚
+      - generic [ref=e284]:
+        - generic [ref=e285]: 推
+        - text: "fumme376: 每次捐血都來看這篇，推整理"
+        - generic [ref=e286]: 116.241.124.208 01/26 23:24
+      - text: 感謝幫推
+      - generic [ref=e287]:
+        - generic [ref=e288]: 推
+        - text: violin12808
+        - generic [ref=e289]:
+          - text: ":"
+          - link "https://i.imgur.com/nDm2qeg.jpeg" [ref=e290] [cursor=pointer]:
+            - /url: https://i.imgur.com/nDm2qeg.jpeg
+        - generic [ref=e291]: 49.216.130.113 01/27 18:41
+      - text: 已新增，感謝唷
+      - generic [ref=e292]:
+        - generic [ref=e293]: 推
+        - text: "linmayyi: 推，小弟剛捐完，希望能夠幫助到有需要"
+        - generic [ref=e294]: 27.51.145.18 01/31 16:22
+      - generic [ref=e295]:
+        - generic [ref=e296]: →
+        - text: "linmayyi: 的人"
+        - generic [ref=e297]: 27.51.145.18 01/31 16:22
+      - text: 你很棒
+      - generic [ref=e298]:
+        - generic [ref=e299]: 推
+        - text: "colan8: 上次捐 發號碼牌躲起來還要我衝前衝後問"
+        - generic [ref=e300]: 42.73.214.156 02/08 10:59
+      - generic [ref=e301]:
+        - generic [ref=e302]: 推
+        - text: "colan8: 還是台北捐血站好多 流程明確 也不費時"
+        - generic [ref=e303]: 42.73.214.156 02/08 11:03
+      - generic [ref=e304]:
+        - generic [ref=e305]: →
+        - text: "colan8: 排100多號照樣三小時內就處理完"
+        - generic [ref=e306]: 42.73.214.156 02/08 11:03
+      - generic [ref=e307]:
+        - generic [ref=e308]: →
+        - text: "colan8: 桃竹苗的吃屎去吧 ZZZ"
+        - generic [ref=e309]: 42.73.214.156 02/08 11:03
+      - text: 聽起來比較像是個別主辦單位流程的問題，不需放大到整個地區吧 情緒抒發當然可以，但如果希望改善、修正流程，建議直接向文宣上的主辦單位反應
+      - generic [ref=e310]:
+        - generic [ref=e311]: →
+        - text: "ching1213: 剛到中山捷運3號出口，竟沒捐血車?"
+        - generic [ref=e312]: 36.226.94.20 02/14 15:26
+      - text: 這就不曉得，稍早看台北捐血中心網頁跟粉絲專頁文宣都還在耶， 倒是內湖東湖國小的臨時被撤掉了，那我也先拿掉，感謝提醒
+      - link "https://i.imgur.com/aWwOOi7.png" [ref=e313] [cursor=pointer]:
+        - /url: https://i.imgur.com/aWwOOi7.png
+      - generic [ref=e314]:
+        - generic [ref=e315]: 推
+        - text: "h60414: 關渡宮每天只有兩百份禮券 很快就沒了"
+        - generic [ref=e316]: 223.137.198.169 02/19 15:18
+      - generic [ref=e317]:
+        - generic [ref=e318]: →
+        - text: "FantisyP: 只有200份??????????"
+        - generic [ref=e319]: 203.73.245.230 02/19 15:23
+      - generic [ref=e320]:
+        - generic [ref=e321]: 推
+        - text: "walkwall: 難怪活動能辦四天 那500cc是拿1份or2份?"
+        - generic [ref=e322]: 114.32.166.57 02/19 16:48
+      - generic [ref=e323]:
+        - generic [ref=e324]: 推
+        - text: "h60414: 不知道 因為我是撲空的XD"
+        - generic [ref=e325]: 36.230.83.201 02/19 22:12
+      - generic [ref=e326]:
+        - generic [ref=e327]: →
+        - text: "st87715: 捐500cc兩份 所以要早點去"
+        - generic [ref=e328]: 118.167.3.154 02/20 08:56
+      - generic [ref=e329]:
+        - generic [ref=e330]: 推
+        - text: "walkwall: 感謝樓上"
+        - generic [ref=e331]: 114.32.166.57 02/20 14:58
+      - generic [ref=e332]:
+        - generic [ref=e333]: →
+        - text: "FantisyP: 昨天有去問,就是200份,還好我住附近而已"
+        - generic [ref=e334]: 203.73.245.75 02/20 15:00
+      - generic [ref=e335]:
+        - generic [ref=e336]: 推
+        - text: "giii: 請問中和鎮福宮有活動嗎"
+        - generic [ref=e337]: 223.140.209.193 02/20 21:48
+      - text: 目前沒找到，有看到在通知你
+      - generic [ref=e338]:
+        - generic [ref=e339]: 推
+        - text: "Namudjoer: 關渡宮萬沒有發號碼牌，是怎麼推算份數"
+        - generic [ref=e340]: 101.10.6.55 02/22 09:57
+      - generic [ref=e341]:
+        - generic [ref=e342]: →
+        - text: "Namudjoer: 的？"
+        - generic [ref=e343]: 101.10.6.55 02/22 09:57
+      - generic [ref=e344]:
+        - generic [ref=e345]: 推
+        - text: "adidas000: 推"
+        - generic [ref=e346]: 218.166.201.37 02/23 20:32
+      - generic [ref=e347]:
+        - generic [ref=e348]: 推
+        - text: "sbbty018: 推"
+        - generic [ref=e349]: 220.130.34.25 02/24 17:07
+      - generic [ref=e350]:
+        - generic [ref=e351]: 推
+        - text: "a64tototo: 請問228圓山捐血現在人多嗎"
+        - generic [ref=e352]: 223.137.137.46 02/28 14:40
+      - generic [ref=e353]:
+        - generic [ref=e354]: 推
+        - text: "WenYing: 推 善心"
+        - generic [ref=e355]: 101.10.245.182 03/06 14:07
+      - generic [ref=e356]:
+        - generic [ref=e357]: 推
+        - text: "h60414: 台銀給全家商品卡 現在還有"
+        - generic [ref=e358]: 223.140.244.173 03/06 15:13
+      - generic [ref=e359]:
+        - generic [ref=e360]: 推
+        - text: sbbty018
+        - generic [ref=e361]:
+          - text: ":"
+          - link "https://tinyurl.com/26nx6dbn" [ref=e362] [cursor=pointer]:
+            - /url: https://tinyurl.com/26nx6dbn
+        - generic [ref=e363]: 175.99.151.58 03/06 15:31
+      - text: 喔喔喔這好酷!!! 這樣我就可以不用更新了嗎～～～ 打字上傳真的很耗時 這樣方便多了
+      - generic [ref=e364]:
+        - generic [ref=e365]: 推
+        - text: "sbbty018: 看起來這個網站是爬去您這篇文章的資訊"
+        - generic [ref=e366]: 111.246.105.219 03/08 14:45
+      - generic [ref=e367]:
+        - generic [ref=e368]: →
+        - text: "sbbty018: 爬取"
+        - generic [ref=e369]: 111.246.105.219 03/08 14:45
+      - generic [ref=e370]:
+        - generic [ref=e371]: →
+        - text: "sbbty018: 所以您沒更新 網站也不會更新"
+        - generic [ref=e372]: 111.246.105.219 03/08 14:46
+      - text: 好的了解QQ 那我許願只需要上傳圖片，網站會自動識別歸類時間跟地區哈哈
+      - generic [ref=e373]:
+        - generic [ref=e374]: 推
+        - text: cowjeff
+        - generic [ref=e375]:
+          - text: ":"
+          - link "https://i.imgur.com/fmhcMnV.jpeg" [ref=e376] [cursor=pointer]:
+            - /url: https://i.imgur.com/fmhcMnV.jpeg
+        - generic [ref=e377]: 111.71.212.187 03/09 17:16
+      - generic [ref=e378]:
+        - generic [ref=e379]: →
+        - text: "cowjeff: 不知道這個是不是兩種都能拿"
+        - generic [ref=e380]: 111.71.212.187 03/09 17:18
+      - text: 感謝分享 只能等待好心人肉身實測了～
+      - generic [ref=e381]:
+        - generic [ref=e382]: 推
+        - text: "q440508: 推 很棒"
+        - generic [ref=e383]: 27.240.216.197 03/10 11:49
+      - generic [ref=e384]:
+        - generic [ref=e385]: 推
+        - text: "maykin1220: 感謝s大分享！！"
+        - generic [ref=e386]: 110.30.0.71 03/10 18:11
+      - generic [ref=e387]:
+        - generic [ref=e388]: 推
+        - text: "guanhualee3: 現在台北信義ATT旁捐血不用等喔 http"
+        - generic [ref=e389]: 223.137.227.128 03/13 11:00
+      - generic [ref=e390]:
+        - generic [ref=e391]: →
+        - text: "guanhualee3: s://i.mopix.cc/g4fV5Z.jpg"
+        - generic [ref=e392]: 223.137.227.128 03/13 11:00
+      - generic [ref=e393]:
+        - generic [ref=e394]: →
+        - text: guanhualee3
+        - generic [ref=e395]:
+          - text: ":"
+          - link "https://i.mopix.cc/YoPJ4H.jpg" [ref=e396] [cursor=pointer]:
+            - /url: https://i.mopix.cc/YoPJ4H.jpg
+        - generic [ref=e397]: 223.137.227.128 03/13 11:00
+      - generic [ref=e399]:
+        - generic [ref=e400]: →
+        - text: "HOKAIDO: 請問公園號的還有嗎"
+        - generic [ref=e401]: 114.34.82.244 03/21 14:38
+      - generic [ref=e402]:
+        - generic [ref=e403]: 推
+        - text: "bonba: 3/22（日）三重愛買獅子會也有 送100愛買跟"
+        - generic [ref=e404]: 49.218.240.1 03/22 11:26
+      - generic [ref=e405]:
+        - generic [ref=e406]: →
+        - text: "bonba: 洗手乳"
+        - generic [ref=e407]: 49.218.240.1 03/22 11:26
+      - generic [ref=e408]:
+        - generic [ref=e409]: →
+        - text: "jackygba: 3/27(五)台北小巨蛋4號出口 全聯200/400"
+        - generic [ref=e410]: 60.250.106.187 03/24 17:28
+      - generic [ref=e411]:
+        - generic [ref=e412]: →
+        - text: jackygba
+        - generic [ref=e413]:
+          - text: ":"
+          - link "https://meee.com.tw/CceNHHo" [ref=e414] [cursor=pointer]:
+            - /url: https://meee.com.tw/CceNHHo
+        - generic [ref=e415]: 60.250.106.187 03/24 17:29
+      - text: 已新增 感謝分享～
+      - generic [ref=e416]:
+        - generic [ref=e417]: 推
+        - text: "milk0330: 4/24(五) 樹林產業園區服務中心 全家商"
+        - generic [ref=e418]: 101.10.236.210 03/26 18:18
+      - generic [ref=e419]:
+        - generic [ref=e420]: →
+        - text: "milk0330: 品券200/500，前100名再解鎖加碼禮物！"
+        - generic [ref=e421]: 101.10.236.210 03/26 18:18
+      - generic [ref=e422]:
+        - generic [ref=e423]: →
+        - text: milk0330
+        - generic [ref=e424]:
+          - text: ":"
+          - link "https://i.imgur.com/NfAWWQX.jpeg" [ref=e425] [cursor=pointer]:
+            - /url: https://i.imgur.com/NfAWWQX.jpeg
+        - generic [ref=e426]: 101.10.236.210 03/26 18:18
+      - text: 已加入內文 感謝分享～
+      - generic [ref=e427]:
+        - generic [ref=e428]: →
+        - text: "tshu: 中港4/4五百的是東東牛排+1活動修正（本來D"
+        - generic [ref=e429]: 49.215.226.172 04/04 08:53
+      - generic [ref=e430]:
+        - generic [ref=e431]: →
+        - text: "tshu: M是+2），現場清點完再離開"
+        - generic [ref=e432]: 49.215.226.172 04/04 08:53
+      - generic [ref=e433]:
+        - generic [ref=e434]: →
+        - text: "tshu: 因為大雨人很少，東西還不錯可以來"
+        - generic [ref=e435]: 49.215.226.172 04/04 08:57
+      - generic [ref=e436]:
+        - generic [ref=e437]: →
+        - text: vespabrother
+        - generic [ref=e438]:
+          - text: ":"
+          - link "https://i.mopix.cc/RazLjc.jpg" [ref=e439] [cursor=pointer]:
+            - /url: https://i.mopix.cc/RazLjc.jpg
+        - generic [ref=e440]: 27.242.38.8 04/04 14:04
+      - text: 感謝分享～
+      - generic [ref=e442]:
+        - generic [ref=e443]: 推
+        - text: "venus34034: 有人在大關嗎？人多嗎？"
+        - generic [ref=e444]: 49.158.77.25 04/06 12:55
+      - generic [ref=e445]:
+        - generic [ref=e446]: 推
+        - text: "mawan168: 4/29 內湖 洲子福德宮 / 250cc(300禮券"
+        - generic [ref=e447]: 1.160.95.66 04/12 16:05
+      - generic [ref=e448]:
+        - generic [ref=e449]: →
+        - text: "mawan168: ）/500cc(600禮券）"
+        - generic [ref=e450]: 1.160.95.66 04/12 16:05
+      - generic [ref=e451]:
+        - generic [ref=e452]: →
+        - text: "mawan168: 去年是送萊爾富商品卡"
+        - generic [ref=e453]: 1.160.95.66 04/12 16:06
+      - text: 感謝分享，方便的話可以提供文宣圖嗎，我找不到><
+      - generic [ref=e454]:
+        - generic [ref=e455]: 推
+        - text: "ynr412: \"7/11-7/12(四-五)台中台灣商務中心\"這一"
+        - generic [ref=e456]: 49.217.136.147 04/13 17:09
+      - generic [ref=e457]:
+        - generic [ref=e458]: →
+        - text: "ynr412: 場的DM上寫的是113年，請問今年也是同樣"
+        - generic [ref=e459]: 49.217.136.147 04/13 17:09
+      - generic [ref=e460]:
+        - generic [ref=e461]: →
+        - text: "ynr412: 日期嗎？"
+        - generic [ref=e462]: 49.217.136.147 04/13 17:09
+      - text: 抱歉我沒注意到年份，這就撤掉
+      - generic [ref=e463]:
+        - generic [ref=e464]: 推
+        - text: chiaopin
+        - generic [ref=e465]:
+          - text: ":"
+          - link "https://i.mopix.cc/2GyFYb.jpg" [ref=e466] [cursor=pointer]:
+            - /url: https://i.mopix.cc/2GyFYb.jpg
+        - generic [ref=e467]: 49.218.93.68 04/13 19:37
+      - text: 感謝支援讚讚
+      - generic [ref=e469]:
+        - generic [ref=e470]: 推
+        - text: "Mydadisgay: 怎麼有貓貓圖 笑死"
+        - generic [ref=e471]: 27.52.167.187 04/19 10:28
+      - text: 明明有重新上傳說@@已改好 感謝提醒
+      - generic [ref=e472]:
+        - generic [ref=e473]: 推
+        - text: "chenglihao: 4/23蘆洲忠義廟目前100多號，需要的人"
+        - generic [ref=e474]: 49.216.27.44 04/23 12:27
+      - generic [ref=e475]:
+        - generic [ref=e476]: →
+        - text: "chenglihao: 盡快前往"
+        - generic [ref=e477]: 49.216.27.44 04/23 12:27
+      - text: 感謝您的熱血召喚<3
+      - generic [ref=e478]:
+        - generic [ref=e479]: 推
+        - text: virsu
+        - generic [ref=e480]:
+          - text: ":"
+          - link "https://upload.cc/i1/2026/04/25/OJXZEq.j" [ref=e481] [cursor=pointer]:
+            - /url: https://upload.cc/i1/2026/04/25/OJXZEq.j
+        - generic [ref=e482]: 113.61.184.96 04/25 16:09
+      - generic [ref=e483]:
+        - generic [ref=e484]: →
+        - text: "virsu: pg"
+        - generic [ref=e485]: 113.61.184.96 04/25 16:09
+      - text: 已新增～感謝分享～
+      - generic [ref=e486]:
+        - generic [ref=e487]: 推
+        - text: aulya
+        - generic [ref=e488]:
+          - text: ":"
+          - link "https://ibb.co/Hp1sGY6f" [ref=e489] [cursor=pointer]:
+            - /url: https://ibb.co/Hp1sGY6f
+        - generic [ref=e490]: 223.140.90.59 04/29 12:03
+      - text: 已新增 感謝分享～
+      - generic [ref=e491]:
+        - generic [ref=e492]: 推
+        - text: "schoolmaster: 有人今天在新店裕隆城，人很多？"
+        - generic [ref=e493]: 27.247.24.142 05/02 11:48
+      - generic [ref=e494]:
+        - generic [ref=e495]: 推
+        - text: "fafcfh: 中正紀念堂大孝門對面的捐血，還有30幾位"
+        - generic [ref=e496]: 223.136.69.243 05/02 12:25
+      - generic [ref=e497]:
+        - generic [ref=e498]: →
+        - text: "fafcfh: 號碼牌可以領，已經半小時沒人來領牌"
+        - generic [ref=e499]: 223.136.69.243 05/02 12:25
+      - generic [ref=e500]:
+        - generic [ref=e501]: 推
+        - text: "KevinGraham: 一蘭台北本店旁邊今天有送300全聯禮"
+        - generic [ref=e502]: 61.31.169.154 05/08 12:11
+      - generic [ref=e503]:
+        - generic [ref=e504]: →
+        - text: "KevinGraham: 券，剛去捐都沒人，不用等"
+        - generic [ref=e505]: 61.31.169.154 05/08 12:11
+      - text: 感謝提供資訊～
+      - generic [ref=e506]:
+        - generic [ref=e507]: 推
+        - text: "Kko05: 推 捐血救人"
+        - generic [ref=e508]: 114.27.182.187 05/10 01:54
+      - text: "※ 編輯: jumpintosky (111.242.226.99 臺灣), 05/13/2026 20:27:45"
+    - generic [ref=e509] [cursor=pointer]: 推文自動更新已關閉

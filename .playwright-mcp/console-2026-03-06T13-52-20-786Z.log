@@ -1,0 +1,5 @@
+[    4392ms] [ERROR] Attestation check for Attribution Reporting on https://www.google-analytics.com failed. @ https://rent.591.com.tw/list?region=8&price=$_25000$&shType=host&acreage=15$_$&section=101,100,98,99,102,103,104,105:0
+[    4392ms] [ERROR] Attestation check for Attribution Reporting on https://www.google-analytics.com failed. @ https://rent.591.com.tw/list?region=8&price=$_25000$&shType=host&acreage=15$_$&section=101,100,98,99,102,103,104,105:0
+[    4829ms] [ERROR] Attestation check for Attribution Reporting on https://www.facebook.com failed. @ https://rent.591.com.tw/list?region=8&price=$_25000$&shType=host&acreage=15$_$&section=101,100,98,99,102,103,104,105:0
+[   53356ms] [ERROR] Attestation check for Attribution Reporting on https://www.google-analytics.com failed. @ https://rent.591.com.tw/list?region=8&price=$_25000$&shType=host&acreage=15$_$&section=101,100,98,99,102,103,104,105&other=cartplace:0
+[   53480ms] [ERROR] Attestation check for Attribution Reporting on https://www.facebook.com failed. @ https://rent.591.com.tw/list?region=8&price=$_25000$&shType=host&acreage=15$_$&section=101,100,98,99,102,103,104,105&other=cartplace:0

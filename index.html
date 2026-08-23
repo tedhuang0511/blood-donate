@@ -92,9 +92,16 @@
     .map-pin { display: inline-block; margin-left: 6px; vertical-align: middle; text-decoration: none; opacity: .85; cursor: pointer; }
     .map-pin:hover { opacity: 1; }
     .map-pin svg { width: 15px; height: 20px; display: inline-block; vertical-align: middle; }
-    .line-share { display: inline-block; margin-left: 6px; vertical-align: middle; opacity: .85; cursor: pointer; text-decoration: none; }
-    .line-share:hover { opacity: 1; }
-    .line-share svg { width: 17px; height: 17px; display: inline-block; vertical-align: middle; }
+    .share-trigger { display: inline-block; margin-left: 6px; vertical-align: middle; opacity: .85; cursor: pointer; text-decoration: none; color: #666; background: none; border: none; padding: 0; }
+    .share-trigger:hover { opacity: 1; }
+    .share-trigger svg { width: 16px; height: 16px; display: inline-block; vertical-align: middle; }
+    .share-menu { position: fixed; z-index: 200; background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.18); padding: 6px; min-width: 160px; display: none; }
+    .share-menu.show { display: block; }
+    .share-menu-item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border: none; background: none; font-size: .85rem; color: #333; text-align: left; cursor: pointer; border-radius: 6px; font-family: inherit; }
+    .share-menu-item:hover { background: #f5f5f5; }
+    .share-menu-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .share-toast { position: fixed; z-index: 210; background: #333; color: #fff; font-size: .78rem; padding: 6px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.2); pointer-events: none; opacity: 0; transition: opacity .2s; }
+    .share-toast.show { opacity: 1; }
     .activity-card.card-highlight { box-shadow: 0 0 0 3px #c0392b, 0 8px 20px rgba(192,57,43,.35); }
     .card-note { font-size: .75rem; color: #888; margin-top: 6px; line-height: 1.5; }
     .tag-pxmart { background: #0057a3; color: #fff; padding: 1px 6px; border-radius: 4px; font-weight: 700; }
@@ -670,21 +677,135 @@
     note.innerHTML=note.innerHTML.replace(/全聯/g,'<span class="tag-pxmart">全聯</span>');
   });
 
-  // 幫每張卡片加上 LINE 分享圖示（跟地圖圖示放在同一行）：點擊組出訊息（含該卡片專屬錨點連結）並開啟 LINE 分享
-  document.querySelectorAll('.activity-card').forEach(card=>{
-    const locEl=card.querySelector('.card-location');
-    if(!locEl || !card.dataset.permalink) return;
-    const msg='📅 '+card.dataset.shareDate+'\n📍 '+card.dataset.shareLoc+'\n🎁 '+card.dataset.shareNote+'\n\n'+card.dataset.permalink;
-    const a=document.createElement('a');
-    a.href='https://line.me/R/msg/text/?'+encodeURIComponent(msg);
-    a.target='_blank';
-    a.rel='noopener';
-    a.className='line-share';
-    a.title='分享到 LINE';
-    a.innerHTML='<svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#06C755"/><path fill="#fff" d="M18 8c-6.6 0-12 4.4-12 9.8 0 4.8 4.3 8.8 10.1 9.6-.4 1.5-1.4 5-1.5 5.3-.2.6.2.6.5.4.2-.1 3.6-2.4 5.1-3.4 6-.7 9.8-4.8 9.8-9.9C30 12.4 24.6 8 18 8z"/></svg>';
-    a.addEventListener('click', e=>e.stopPropagation());
-    locEl.appendChild(a);
-  });
+  // 幫每張卡片加上分享圖示（跟地圖圖示放在同一行）：優先用原生 Web Share API 叫出系統分享選單（手機為主，天然涵蓋
+  // Instagram 等 App），不支援時才退回自訂下拉選單（只放 LINE / Threads / 複製連結，這些都能用網址直接處理；
+  // Instagram 沒有可直接帶內容分享的網址，故不放進自訂選單，詳見 docs/adr/0001-hybrid-share-menu.md）
+  (function(){
+    function buildShareMessage(card){
+      return '📅 '+card.dataset.shareDate+'\n📍 '+card.dataset.shareLoc+'\n🎁 '+card.dataset.shareNote;
+    }
+    // LINE／Threads／複製連結都是「純文字」管道，所以連結要接在文字後面才看得到；
+    // navigator.share() 則把 text 跟 url 當成兩個獨立欄位交給系統，多數分享目標會自動組合，
+    // 這裡刻意不把 permalink 接進 text，避免部分目標把連結顯示兩次。
+    function buildFullShareText(card){
+      return buildShareMessage(card)+'\n\n'+card.dataset.permalink;
+    }
+
+    function fallbackCopy(text, done){
+      const ta=document.createElement('textarea');
+      ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      done();
+    }
+
+    let toastEl=null, toastTimer=null;
+    function showToast(anchorEl, msg){
+      if(!toastEl){ toastEl=document.createElement('div'); toastEl.className='share-toast'; document.body.appendChild(toastEl); }
+      toastEl.textContent=msg;
+      const r=anchorEl.getBoundingClientRect();
+      toastEl.style.left=Math.round(r.left)+'px';
+      toastEl.style.top=Math.round(r.bottom+8)+'px';
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toastEl.classList.remove('show'), 1500);
+    }
+
+    const SHARE_TARGETS=[
+      {
+        id:'line', label:'分享到 LINE',
+        icon:'<svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#06C755"/><path fill="#fff" d="M18 8c-6.6 0-12 4.4-12 9.8 0 4.8 4.3 8.8 10.1 9.6-.4 1.5-1.4 5-1.5 5.3-.2.6.2.6.5.4.2-.1 3.6-2.4 5.1-3.4 6-.7 9.8-4.8 9.8-9.9C30 12.4 24.6 8 18 8z"/></svg>',
+        run: card=>window.open('https://line.me/R/msg/text/?'+encodeURIComponent(buildFullShareText(card)), '_blank', 'noopener')
+      },
+      {
+        id:'threads', label:'分享到 Threads',
+        icon:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#333" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><path d="M9 8.5c3.5-.6 6 .6 6 3s-2 3.4-4 3.4c-1.6 0-2.6-.8-2.6-1.9 0-1.3 1.4-2 3.6-2 1.7 0 3 .5 3.6 1.3"/></svg>',
+        run: card=>window.open('https://www.threads.net/intent/post?text='+encodeURIComponent(buildFullShareText(card)), '_blank', 'noopener')
+      },
+      {
+        id:'copy', label:'複製連結',
+        icon:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+        run: (card, triggerEl)=>{
+          const text=buildFullShareText(card);
+          const done=()=>showToast(triggerEl,'已複製!');
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+          } else {
+            fallbackCopy(text,done);
+          }
+        }
+      }
+    ];
+
+    let menuEl=null, menuOpenTrigger=null;
+    function closeMenu(){
+      if(menuEl) menuEl.classList.remove('show');
+      menuOpenTrigger=null;
+    }
+    function openMenu(triggerEl, card){
+      if(!menuEl){
+        menuEl=document.createElement('div');
+        menuEl.className='share-menu';
+        SHARE_TARGETS.forEach(t=>{
+          const btn=document.createElement('button');
+          btn.type='button';
+          btn.className='share-menu-item';
+          btn.dataset.action=t.id;
+          btn.innerHTML=t.icon+'<span>'+t.label+'</span>';
+          menuEl.appendChild(btn);
+        });
+        menuEl.addEventListener('click', e=>{
+          e.stopPropagation();
+          const btn=e.target.closest('.share-menu-item');
+          if(!btn || !menuEl._card) return;
+          const target=SHARE_TARGETS.find(t=>t.id===btn.dataset.action);
+          if(target) target.run(menuEl._card, menuOpenTrigger);
+          closeMenu();
+        });
+        document.body.appendChild(menuEl);
+      }
+      menuEl._card=card;
+      menuOpenTrigger=triggerEl;
+      const r=triggerEl.getBoundingClientRect();
+      menuEl.classList.add('show');
+      const menuWidth=menuEl.offsetWidth||160;
+      let left=r.left;
+      if(left+menuWidth>window.innerWidth-8) left=window.innerWidth-menuWidth-8;
+      menuEl.style.left=Math.round(left)+'px';
+      menuEl.style.top=Math.round(r.bottom+6)+'px';
+    }
+    document.addEventListener('click', e=>{
+      if(menuEl && menuEl.classList.contains('show') && !e.target.closest('.share-menu') && !e.target.closest('.share-trigger')) closeMenu();
+    });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMenu(); });
+    window.addEventListener('scroll', closeMenu, true);
+
+    const PAPER_PLANE_ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 12 2"/></svg>';
+
+    document.querySelectorAll('.activity-card').forEach(card=>{
+      const locEl=card.querySelector('.card-location');
+      if(!locEl || !card.dataset.permalink) return;
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='share-trigger';
+      btn.title='分享';
+      btn.innerHTML=PAPER_PLANE_ICON;
+      btn.addEventListener('click', e=>{
+        e.stopPropagation();
+        if(navigator.share){
+          navigator.share({ text: buildShareMessage(card), url: card.dataset.permalink }).catch(()=>{});
+          return;
+        }
+        if(menuEl && menuEl.classList.contains('show') && menuOpenTrigger===btn){
+          closeMenu();
+        } else {
+          openMenu(btn, card);
+        }
+      });
+      locEl.appendChild(btn);
+    });
+  })();
 
   // 從分享連結進來（帶 #card-xxxx）時，自動捲動並高亮該張卡片
   (function(){

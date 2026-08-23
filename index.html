@@ -133,6 +133,23 @@
     #backToTop:hover { background: #a5301f; }
     .region-section.region-urgent { border-left: 4px solid #dc3545; padding-left: 14px; background: #fff8f8; border-radius: 0 8px 8px 0; }
     .region-urgent-flag { display: inline-flex; align-items: center; gap: 4px; background: #dc3545; color: #fff; font-size: .72rem; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
+    .gift-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .gift-tag { font-size: .68rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: #f0f0f0; color: #666; white-space: nowrap; }
+    .gift-tag.g-voucher { background: #e8f0fe; color: #1a56a8; }
+    .gift-tag.g-movie   { background: #f3e8fd; color: #6b28b8; }
+    .gift-tag.g-food    { background: #fff1e0; color: #a8590f; }
+    .gift-tag.g-health  { background: #e6f7ed; color: #1a7a42; }
+    .gift-tag.g-first   { background: #ffe9ec; color: #b3243a; }
+    .gift-tag.g-lottery { background: #fff8db; color: #8a6b00; }
+    .gift-tag.g-points  { background: #e9f5f7; color: #12707f; }
+    .gift-tag.g-check   { background: #eef0ff; color: #3b3fa8; }
+    .gift-tag.g-limited { background: #f5f5f5; color: #999; }
+    .gift-value { display: inline-block; font-size: .74rem; font-weight: 700; color: #9a6b00; background: #fff8db; padding: 2px 8px; border-radius: 10px; margin-top: 8px; }
+    .card-new-badge { display: inline-block; background: #c0392b; color: #fff; font-size: .66rem; font-weight: 700; padding: 1px 7px; border-radius: 8px; margin-left: 6px; vertical-align: middle; letter-spacing: .03em; }
+    .activity-card.card-is-new { box-shadow: 0 0 0 2px rgba(192,57,43,.45), 0 1px 4px rgba(0,0,0,.1); }
+    .activity-card.card-filtered-out { display: none; }
+    .filter-row2 { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #eee; }
+    .filter-hint { font-size: .72rem; color: #bbb; margin-top: 8px; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -222,6 +239,12 @@
     <button class="qf-btn" data-kw="摸彩" type="button">摸彩／抽獎</button>
     <button class="qf-btn" data-kw="集點" type="button">集點活動</button>
   </div>
+  <div class="quick-filters filter-row2">
+    <span class="qf-label">排序／檢視：</span>
+    <button class="qf-btn" id="sortValueBtn" type="button" title="依 250cc 那一行可辨識出的金額由高到低排序">💰 贈品估值高→低</button>
+    <button class="qf-btn" id="onlyNewBtn" type="button" title="只顯示你上次造訪之後才出現的活動">🆕 只看新增</button>
+  </div>
+  <div class="filter-hint" id="filterHint"></div>
   <div id="searchStats"></div>
 </div>
 
@@ -820,34 +843,203 @@
     }, 150);
   })();
 
+  // 贈品分類、估值排序，以及「上次造訪後新增」標記。三者共用同一份卡片清單，所以放在同一個模組裡；
+  // 跟下面的關鍵字搜尋之間透過 SiteFilters 交換狀態（搜尋要知道有沒有開「只看新增」，按鈕要能觸發重新篩選）。
+  const SiteFilters={onlyNew:false,apply:null};
+  (function(){
+    const cards=Array.from(document.querySelectorAll('.activity-card'));
+    if(!cards.length) return;
+
+    // ---- 贈品分類 ----
+    // 贈品說明是原po手寫的自由文字，不可能窮舉，這裡只求常見類別命中率高，寧可漏標也不要誤標。
+    const GIFT_RULES=[
+      {cls:'g-voucher', label:'禮券',     re:/禮券|商品券|提貨券|抵用券|兌換券|折價券|現金券|五折券|購物金|商品卡|禮物卡/},
+      {cls:'g-movie',   label:'電影票',   re:/電影票|影城|威秀|秀泰/},
+      {cls:'g-health',  label:'保健食品', re:/保健食品|膠原|燕窩|高麗蔘|正官庄|益生菌|維他命|葉酸|冬膏|滴雞精|髮浴|舒活|珍珠/},
+      {cls:'g-food',    label:'食品',     re:/白米|平安米|雞蛋|鮮肉|水餃|湯包|吐司|麵包|麵線|餅乾|牛舌餅|飲料|冰茶|牛排|火鍋|套餐|烤肉|魯肉飯|鼎邊趖|星巴克|咖啡|牛奶/},
+      {cls:'g-first',   label:'首捐限定', re:/首捐|首次/},
+      {cls:'g-lottery', label:'摸彩',     re:/摸彩|抽獎|轉轉樂/},
+      {cls:'g-points',  label:'集點',     re:/集點|集滿|累積\d+次/},
+      {cls:'g-check',   label:'健康檢測', re:/血糖檢測|LDCT|篩檢|健康檢查/},
+      {cls:'g-limited', label:'限量',     re:/送完為止|換完為止|數量有限|限量|前\d+名|每日限/}
+    ];
+
+    // 估值只取 250cc 那一行：500cc 通常是加倍，用 250cc 當基準各張卡片才可比。
+    // 這是「說明文字裡寫得出金額的部分加總」，實物贈品沒有標價就算不進來，所以 UI 上一律寫「估」。
+    //
+    // 最容易高估的來源是摸彩獎品：「可參加摸彩（二獎5,000元禮券）」的 5000 元不是人人有獎，
+    // 算進去會讓排序完全失真。所以先拿掉描述獎品的括號，再丟掉「抽獎字眼出現在金額之前」的子句
+    //（＝那筆錢屬於抽獎），保留「贈全聯禮券200元+摸彩1次」這種錢在前、抽獎在後的寫法。
+    const MONEY=/(\d[\d,]*)\s*元/;
+    function estimateValue(noteText){
+      const lines=noteText.split('\n').map(s=>s.trim()).filter(Boolean);
+      const base=(lines.find(l=>/^250cc/.test(l)) || lines.join(' '))
+        .replace(/[（(][^）)]*[）)]/g, seg=>/摸彩|抽獎|獎/.test(seg) ? '' : seg);
+      let sum=0;
+      base.split(/[；;]/).forEach(clause=>{
+        const lottery=clause.search(/摸彩|抽獎|抽/);
+        const money=clause.search(MONEY);
+        if(money<0) return;
+        if(lottery>=0 && lottery<money) return;
+        const re=new RegExp(MONEY.source,'g');
+        let m;
+        while((m=re.exec(clause))!==null){ sum+=parseInt(m[1].replace(/,/g,''),10)||0; }
+      });
+      return sum;
+    }
+
+    cards.forEach(card=>{
+      const note=card.dataset.shareNote||'';
+      const hits=GIFT_RULES.filter(r=>r.re.test(note));
+      const value=estimateValue(note);
+      card.dataset.giftValue=String(value);
+      card.dataset.giftTags=hits.map(h=>h.label).join(' ');
+
+      const body=card.querySelector('.card-body');
+      if(!body) return;
+      if(value>0){
+        const v=document.createElement('div');
+        v.className='gift-value';
+        v.textContent='💰 250cc 約 $'+value.toLocaleString();
+        body.appendChild(v);
+      }
+      if(hits.length){
+        const wrap=document.createElement('div');
+        wrap.className='gift-tags';
+        hits.forEach(h=>{
+          const t=document.createElement('span');
+          t.className='gift-tag '+h.cls;
+          t.textContent=h.label;
+          wrap.appendChild(t);
+        });
+        body.appendChild(wrap);
+      }
+    });
+
+    // ---- 「上次造訪後新增」----
+    // 站台每週更新一次、更新時會把過期活動刪掉，所以「新」不是靠活動日期判斷，
+    // 而是拿這次的卡片 ID 集合跟上次造訪存下來的做差集。卡片 ID 由上面的雜湊模組算好
+    //（海報網址＋日期＋地點），內容不變就不會變動，正好能當這批資料的指紋。
+    const SEEN_KEY='bd_seen_cards_v1';
+    const ids=cards.map(c=>c.id).filter(Boolean).sort();
+    let store=null;
+    try{ store=JSON.parse(localStorage.getItem(SEEN_KEY)||'null'); }catch(e){}
+    let newIds=[];
+    if(store && Array.isArray(store.ids)){
+      const sameBatch=store.ids.length===ids.length && store.ids.every((id,i)=>id===ids[i]);
+      // 內容沒變（例如只是重新整理）就沿用上次算出來的清單，徽章才不會一刷新就消失
+      newIds=sameBatch ? (Array.isArray(store.newIds)?store.newIds:[])
+                       : ids.filter(id=>!new Set(store.ids).has(id));
+    }
+    // 首次造訪時 store 是 null，newIds 保持空陣列：沒有比較基準就不標任何東西
+    try{ localStorage.setItem(SEEN_KEY, JSON.stringify({ids:ids,newIds:newIds})); }catch(e){}
+
+    const newSet=new Set(newIds);
+    cards.forEach(card=>{
+      if(!newSet.has(card.id)) return;
+      card.classList.add('card-is-new');
+      const dateEl=card.querySelector('.card-date');
+      if(dateEl && !dateEl.querySelector('.card-new-badge')){
+        const b=document.createElement('span');
+        b.className='card-new-badge';
+        b.textContent='NEW';
+        dateEl.appendChild(b);
+      }
+    });
+
+    // ---- 控制列 ----
+    const sortBtn=document.getElementById('sortValueBtn');
+    const newBtn=document.getElementById('onlyNewBtn');
+    const hint=document.getElementById('filterHint');
+
+    // 記住原始順序（＝PTT 原文順序），才能在取消排序時還原
+    document.querySelectorAll('.activity-grid').forEach(grid=>{
+      Array.from(grid.children).forEach((c,i)=>{ c._origIdx=i; });
+    });
+
+    let sortByValue=false;
+    function applySort(){
+      document.querySelectorAll('.activity-grid').forEach(grid=>{
+        const items=Array.from(grid.children);
+        items.sort(sortByValue
+          ? (a,b)=>(parseInt(b.dataset.giftValue||'0',10)-parseInt(a.dataset.giftValue||'0',10)) || (a._origIdx-b._origIdx)
+          : (a,b)=>a._origIdx-b._origIdx);
+        items.forEach(el=>grid.appendChild(el));
+      });
+    }
+
+    function refreshHint(){
+      if(!hint) return;
+      const parts=[];
+      if(sortByValue) parts.push('估值只抓贈品說明裡寫得出金額的部分（以 250cc 為基準），實物贈品不計入，僅供比較參考。');
+      if(newIds.length) parts.push('「NEW」指的是你上次造訪之後才出現的活動，共 '+newIds.length+' 筆。');
+      hint.textContent=parts.join(' ');
+    }
+
+    if(sortBtn){
+      sortBtn.addEventListener('click',()=>{
+        sortByValue=!sortByValue;
+        sortBtn.classList.toggle('active', sortByValue);
+        applySort();
+        refreshHint();
+      });
+    }
+    if(newBtn){
+      if(!newIds.length){
+        // 首次造訪、或這批沒有新活動：不留一顆按了永遠是空的按鈕
+        newBtn.style.display='none';
+      } else {
+        newBtn.textContent='🆕 只看新增 ('+newIds.length+')';
+        newBtn.addEventListener('click',()=>{
+          SiteFilters.onlyNew=!SiteFilters.onlyNew;
+          newBtn.classList.toggle('active', SiteFilters.onlyNew);
+          if(SiteFilters.apply) SiteFilters.apply();
+        });
+      }
+    }
+    refreshHint();
+  })();
+
   // 搜尋／篩選：依關鍵字比對卡片的日期、地點、贈品說明文字
   (function(){
     const searchBox=document.getElementById('searchBox');
     const searchClear=document.getElementById('searchClear');
     const searchStats=document.getElementById('searchStats');
-    const qfButtons=document.querySelectorAll('.qf-btn');
+    // 只抓帶 data-kw 的：排序／只看新增那兩顆共用 .qf-btn 外觀，但不是關鍵字篩選器
+    const qfButtons=document.querySelectorAll('.qf-btn[data-kw]');
     const cards=Array.from(document.querySelectorAll('.activity-card'));
     const regionSections=Array.from(document.querySelectorAll('.region-section'));
     if(!searchBox) return;
 
-    // 預先算好每張卡片的可搜尋文字（含日期、地點、贈品說明）
-    cards.forEach(card=>{ card._searchText=card.textContent.replace(/\s+/g,' ').toLowerCase(); });
+    // 預先算好每張卡片的可搜尋文字（日期、地點、贈品說明，外加自動判定出的贈品分類）。
+    // 這裡刻意用 dataset 而不是 textContent：估值、分類標籤、NEW 徽章都是後來加進 DOM 的，
+    // 用 textContent 會把它們一起吃進搜尋範圍（例如打「新」就命中所有新卡片）。
+    cards.forEach(card=>{
+      card._searchText=[card.dataset.shareDate,card.dataset.shareLoc,card.dataset.shareNote,card.dataset.giftTags]
+        .filter(Boolean).join(' ').replace(/\s+/g,' ').toLowerCase();
+    });
 
     function applyFilter(){
       const kw=searchBox.value.trim().toLowerCase();
+      const onlyNew=!!SiteFilters.onlyNew;
       let matched=0;
       cards.forEach(card=>{
-        const show=!kw || card._searchText.includes(kw);
+        const show=(!kw || card._searchText.includes(kw)) && (!onlyNew || card.classList.contains('card-is-new'));
         card.classList.toggle('card-hidden', !show);
         if(show) matched++;
       });
       regionSections.forEach(sec=>{
         const anyVisible=sec.querySelector('.activity-card:not(.card-hidden)');
-        sec.classList.toggle('region-hidden', !!kw && !anyVisible);
+        sec.classList.toggle('region-hidden', (!!kw || onlyNew) && !anyVisible);
       });
       qfButtons.forEach(btn=>{ btn.classList.toggle('active', kw && btn.dataset.kw.toLowerCase()===kw); });
-      searchStats.textContent = kw ? ('找到 '+matched+' 筆符合「'+searchBox.value.trim()+'」的活動') : '';
+      const q=searchBox.value.trim();
+      if(kw && onlyNew)      searchStats.textContent='找到 '+matched+' 筆新增且符合「'+q+'」的活動';
+      else if(kw)            searchStats.textContent='找到 '+matched+' 筆符合「'+q+'」的活動';
+      else if(onlyNew)       searchStats.textContent='上次造訪後新增了 '+matched+' 筆活動';
+      else                   searchStats.textContent='';
     }
+    SiteFilters.apply=applyFilter;
 
     searchBox.addEventListener('input', applyFilter);
     if(searchClear){ searchClear.addEventListener('click', ()=>{ searchBox.value=''; applyFilter(); searchBox.focus(); }); }

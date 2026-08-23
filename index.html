@@ -1003,7 +1003,14 @@
     if(!hash) return;
     const target=document.getElementById(hash);
     if(!target || !target.classList.contains('activity-card')) return;
+    // 這個 timeout 晚於下面搜尋模組的初始化，所以這時 ?q= 的篩選已經套用完了。
     setTimeout(()=>{
+      // 網址同時帶了 ?q= 和 #card-，而關鍵字正好把這張卡篩掉時：
+      // 指名某一張卡是更具體的意圖，讓它勝出，清掉關鍵字再捲過去。
+      if(target.classList.contains('card-hidden')){
+        const sb=document.getElementById('searchBox');
+        if(sb){ sb.value=''; if(SiteFilters.apply) SiteFilters.apply(); }
+      }
       target.scrollIntoView({behavior:'smooth', block:'center'});
       target.classList.add('card-highlight');
       setTimeout(()=>target.classList.remove('card-highlight'), 2500);
@@ -1232,6 +1239,20 @@
         .filter(Boolean).join(' ').replace(/\s+/g,' ').toLowerCase();
     });
 
+    // 搜尋狀態寫進 ?q=，讓篩選結果跟卡片 permalink 一樣可以分享。
+    // 用 replaceState 而不是 pushState：否則搜尋「全聯」要按九次上一頁才離得開。
+    // 只序列化關鍵字：「只看新增」是拿本機 localStorage 的造訪紀錄算出來的，
+    // 分享給別人毫無意義；排序則純屬檢視偏好，不影響看到哪些活動。
+    let urlTimer=null;
+    function syncUrl(kw){
+      clearTimeout(urlTimer);
+      urlTimer=setTimeout(()=>{
+        const u=new URL(location.href);
+        if(kw) u.searchParams.set('q', kw); else u.searchParams.delete('q');
+        history.replaceState(null, '', u.pathname+u.search+u.hash);
+      }, 250);
+    }
+
     function applyFilter(){
       const kw=searchBox.value.trim().toLowerCase();
       const onlyNew=!!SiteFilters.onlyNew;
@@ -1248,6 +1269,7 @@
       qfButtons.forEach(btn=>{ btn.classList.toggle('active', kw && btn.dataset.kw.toLowerCase()===kw); });
       // 命中的關鍵字可能藏在被摺疊的那幾行裡，展開才看得到自己為什麼命中
       if(SiteFilters.expandNotesFor) SiteFilters.expandNotesFor(kw);
+      syncUrl(searchBox.value.trim());
       const q=searchBox.value.trim();
       if(kw && onlyNew)      searchStats.textContent='找到 '+matched+' 筆新增且符合「'+q+'」的活動';
       else if(kw)            searchStats.textContent='找到 '+matched+' 筆符合「'+q+'」的活動';
@@ -1256,14 +1278,26 @@
     }
     SiteFilters.apply=applyFilter;
 
-    searchBox.addEventListener('input', applyFilter);
-    if(searchClear){ searchClear.addEventListener('click', ()=>{ searchBox.value=''; applyFilter(); searchBox.focus(); }); }
+    // 打字時每個字都掃 135 張卡＋寫一次網址太浪費，壓成 120ms 一次。
+    // 按鈕觸發的（清除、快速篩選）維持立即反應。
+    let inputTimer=null;
+    searchBox.addEventListener('input', ()=>{
+      clearTimeout(inputTimer);
+      inputTimer=setTimeout(applyFilter, 120);
+    });
+    if(searchClear){ searchClear.addEventListener('click', ()=>{ clearTimeout(inputTimer); searchBox.value=''; applyFilter(); searchBox.focus(); }); }
     qfButtons.forEach(btn=>{
       btn.addEventListener('click', ()=>{
+        clearTimeout(inputTimer);
         searchBox.value = btn.classList.contains('active') ? '' : btn.dataset.kw;
         applyFilter();
       });
     });
+
+    // 進站時把 ?q= 還原成搜尋狀態。這段是同步執行的，所以會早於上面 #card-xxxx 的捲動 timeout。
+    const initialQ=(new URLSearchParams(location.search).get('q')||'').trim();
+    if(initialQ) searchBox.value=initialQ;
+    applyFilter();
   })();
 </script>
 <script data-goatcounter="https://blooddonate.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

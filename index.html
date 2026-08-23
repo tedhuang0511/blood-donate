@@ -52,10 +52,10 @@
       --border-strong: #ccc;
       --text: #333;
       --text-muted: #666;
-      --text-subtle: #888;
-      --text-dim: #999;
-      --text-faint: #aaa;
-      --text-ghost: #bbb;
+      --text-subtle: #666;      /* 5.74:1 */
+      --text-dim: #767676;      /* 4.54:1 */
+      --text-faint: #767676;    /* 4.54:1 */
+      --text-ghost: #6b6b6b;    /* 4.89:1；source-note 在 --bg 上而非白卡上，#767676 只有 4.17:1 */
       --legend-text: #555;
       --brand: #c0392b;
       --brand-strong: #a5301f;
@@ -94,8 +94,10 @@
       --g-lottery-bg: #fff8db; --g-lottery-text: #8a6b00;
       --g-points-bg:  #e9f5f7; --g-points-text:  #12707f;
       --g-check-bg:   #eef0ff; --g-check-text:   #3b3fa8;
-      --g-limited-bg: #f5f5f5; --g-limited-text: #999;
-      --gift-value-bg: #fff8db; --gift-value-text: #9a6b00;
+      --g-limited-bg: #f5f5f5; --g-limited-text: #6b6b6b;
+      --gift-value-bg: #fff8db; --gift-value-text: #8a6000;
+      /* 焦點框刻意不用品牌紅：紅色在紅色 nav 上等於看不見 */
+      --focus: #0b57d0;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -111,9 +113,9 @@
         --text: #ece8e4;
         --text-muted: #b3aca6;
         --text-subtle: #9b948e;
-        --text-dim: #8a837d;
+        --text-dim: #8a837d;      /* 4.53:1 */
         --text-faint: #8a837d;
-        --text-ghost: #7d766f;
+        --text-ghost: #8a837d;    /* #7d766f 只有 3.78:1 */
         --legend-text: #b3aca6;
         /* #c0392b 在深色底只有 3.2:1，小字不及格；#ff6b5a 是 6.0:1 */
         --brand: #ff6b5a;
@@ -147,8 +149,13 @@
         --g-check-bg:   rgba(90,96,220,.18);  --g-check-text:   #a3a7f0;
         --g-limited-bg: rgba(255,255,255,.07);--g-limited-text: #9b948e;
         --gift-value-bg: rgba(224,180,0,.15); --gift-value-text: #e0bb52;
+        --focus: #9ec3ff;
       }
     }
+    /* 鍵盤焦點：滑鼠點擊不顯示，Tab 過去才顯示 */
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    nav a:focus-visible { outline-color: #fff; outline-offset: -3px; }
+    .card-img-wrap:focus-visible { outline-offset: -3px; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); }
     nav {
@@ -219,7 +226,7 @@
     #lightbox { display: none; position: fixed; inset: 0; background: var(--overlay); z-index: 999; align-items: center; justify-content: center; }
     #lightbox.show { display: flex; }
     #lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,.5); }
-    #lightbox-close { position: absolute; top: 16px; right: 24px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; user-select: none; }
+    #lightbox-close { position: absolute; top: 16px; right: 24px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; user-select: none; background: none; border: none; padding: 4px 10px; font-family: inherit; }
     .source-note { text-align: center; font-size: .75rem; color: var(--text-ghost); margin-top: 40px; }
     .source-note a { color: var(--text-ghost); }
     .ambassador-card { background: var(--surface); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 4px var(--shadow-1); text-align: center; }
@@ -707,17 +714,41 @@
 <p class="source-note">資料來源：<a href="https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html" target="_blank">PTT Lifeismoney — 2026年全台捐血贈品</a>／最後更新：2026/08/22</p>
 </main>
 
-<div id="lightbox" onclick="closeLb()">
-  <span id="lightbox-close" onclick="closeLb()">✕</span>
+<div id="lightbox" onclick="closeLb()" role="dialog" aria-modal="true" aria-label="活動海報放大檢視">
+  <button id="lightbox-close" type="button" onclick="closeLb()" aria-label="關閉海報">✕</button>
   <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()"/>
 </div>
 
 <button id="backToTop" type="button" title="回到頂端" aria-label="回到頂端">↑</button>
 
 <script>
-  function lb(src){ document.getElementById('lightbox-img').src=src; document.getElementById('lightbox').classList.add('show'); document.body.style.overflow='hidden'; }
-  function closeLb(){ document.getElementById('lightbox').classList.remove('show'); document.body.style.overflow=''; }
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLb(); });
+  // 開燈箱前記住是誰打開的，關閉時把焦點還回去，鍵盤使用者才不會被丟回頁面頂端
+  let lbReturnFocus=null;
+  function lb(src){
+    lbReturnFocus=document.activeElement;
+    document.getElementById('lightbox-img').src=src;
+    document.getElementById('lightbox').classList.add('show');
+    document.body.style.overflow='hidden';
+    const closeBtn=document.getElementById('lightbox-close');
+    if(closeBtn) closeBtn.focus();
+  }
+  function closeLb(){
+    const box=document.getElementById('lightbox');
+    if(!box.classList.contains('show')) return;
+    box.classList.remove('show');
+    document.body.style.overflow='';
+    if(lbReturnFocus && document.contains(lbReturnFocus)) lbReturnFocus.focus();
+    lbReturnFocus=null;
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ closeLb(); return; }
+    // 焦點鎖在燈箱內：關閉鈕是裡面唯一的可聚焦元素，所以 Tab 一律留在它身上
+    if(e.key==='Tab' && document.getElementById('lightbox').classList.contains('show')){
+      e.preventDefault();
+      const closeBtn=document.getElementById('lightbox-close');
+      if(closeBtn) closeBtn.focus();
+    }
+  });
   function imgErr(img){
     img.style.display='none';
     const w=img.closest('.card-img-wrap');
@@ -725,7 +756,7 @@
   }
   const secs=document.querySelectorAll('section[id],div[id="stock"]');
   const links=document.querySelectorAll('nav a[href^="#"]');
-  secs.forEach(s=>{ new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); const a=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(a){ a.classList.add('active'); a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); } } }); },{rootMargin:'-20% 0px -70% 0px'}).observe(s); });
+  secs.forEach(s=>{ new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>{ a.classList.remove('active'); a.removeAttribute('aria-current'); }); const a=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(a){ a.classList.add('active'); a.setAttribute('aria-current','true'); a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); } } }); },{rootMargin:'-20% 0px -70% 0px'}).observe(s); });
 
   // 幫每張卡片算出固定的短ID（海報圖網址＋日期＋地點雜湊），供分享連結使用；同時記下純文字內容供 LINE 分享訊息使用
   (function(){
@@ -758,13 +789,27 @@
     });
   })();
 
-  // 幫每張卡片的海報圖加上有意義的 alt 文字（無障礙閱讀 + SEO）
+  // 幫每張卡片的海報圖加上有意義的 alt 文字（無障礙閱讀 + SEO），
+  // 並把 .card-img-wrap 這個「div + onclick」補成鍵盤可操作的按鈕。
+  // 之所以在 JS 補而不是把 markup 改成 <button>：這些卡片是 PTT 同步流程逐張寫出來的
+  //（見 .github/prompts/update.prompt.md），改 markup 形狀等於連同步流程一起改。
   document.querySelectorAll('.activity-card').forEach(card=>{
     const img=card.querySelector('.card-img-wrap img');
     if(!img) return;
     const date=(card.querySelector('.card-date')||{}).textContent||'';
     const loc=(card.querySelector('.card-location')||{}).textContent||'';
-    img.alt=(date+' '+loc).replace(/\s+/g,' ').trim()+' 捐血活動海報';
+    const label=(date+' '+loc).replace(/\s+/g,' ').trim();
+    img.alt=label+' 捐血活動海報';
+    const wrap=img.closest('.card-img-wrap');
+    if(!wrap || !wrap.getAttribute('onclick')) return;
+    wrap.setAttribute('role','button');
+    wrap.setAttribute('tabindex','0');
+    wrap.setAttribute('aria-label','放大檢視海報：'+label);
+    wrap.addEventListener('keydown',e=>{
+      if(e.key!=='Enter' && e.key!==' ') return;
+      e.preventDefault();
+      wrap.click();
+    });
   });
 
   // 血型急缺的地區，讓整個區塊在視覺上更明顯

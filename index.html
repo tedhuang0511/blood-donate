@@ -89,8 +89,9 @@
     .card-body { padding: 12px 14px; }
     .card-date { font-size: .78rem; font-weight: 700; color: #c0392b; margin-bottom: 4px; }
     .card-location { font-size: .93rem; font-weight: 600; color: #333; line-height: 1.4; }
-    .map-pin { display: inline-block; margin-left: 6px; font-size: .82rem; text-decoration: none; opacity: .7; cursor: pointer; }
+    .map-pin { display: inline-block; margin-left: 6px; vertical-align: middle; text-decoration: none; opacity: .85; cursor: pointer; }
     .map-pin:hover { opacity: 1; }
+    .map-pin svg { width: 15px; height: 20px; display: inline-block; vertical-align: middle; }
     .line-share { display: inline-block; margin-left: 6px; vertical-align: middle; opacity: .85; cursor: pointer; text-decoration: none; }
     .line-share:hover { opacity: 1; }
     .line-share svg { width: 17px; height: 17px; display: inline-block; vertical-align: middle; }
@@ -648,6 +649,7 @@
 
   // 幫每張卡片的地點加上 Google Maps 快速連結圖示（泛稱地點如「各指定捐血點」不加）
   const MAP_EXCLUDE=['各指定','各固定','轄區內'];
+  let cardMapPinIdx=0;
   document.querySelectorAll('.card-location').forEach(loc=>{
     const text=loc.textContent.trim();
     if(!text || MAP_EXCLUDE.some(k=>text.includes(k))) return;
@@ -657,7 +659,8 @@
     pin.rel='noopener';
     pin.className='map-pin';
     pin.title='在 Google Maps 開啟「'+text+'」';
-    pin.textContent='📍';
+    pin.innerHTML='<svg viewBox="0 0 36 48" aria-hidden="true"><defs><clipPath id="mapPinClip-'+cardMapPinIdx+'"><path d="M18 2C10.268 2 4 8.268 4 16c0 10.5 14 30 14 30s14-19.5 14-30c0-7.732-6.268-14-14-14z"/></clipPath></defs><g clip-path="url(#mapPinClip-'+cardMapPinIdx+')"><polygon points="18,16 -20.58,-29.96 38.52,-40.4" fill="#1a73e8"/><polygon points="18,16 38.52,-40.4 77.76,21.22" fill="#4285f4"/><polygon points="18,16 77.76,21.22 -27.96,54.58" fill="#34a853"/><polygon points="18,16 -27.96,54.58 -41.1,5.56" fill="#fbbc04"/><polygon points="18,16 -41.1,5.56 -20.58,-29.96" fill="#ea4335"/></g><circle cx="18" cy="16" r="6" fill="#fff"/></svg>';
+    cardMapPinIdx++;
     pin.addEventListener('click',e=>e.stopPropagation());
     loc.appendChild(pin);
   });

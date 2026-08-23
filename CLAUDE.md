@@ -1,3 +1,7 @@
+## Language
+
+一律使用繁體中文與使用者對話,除非使用者主動改用其他語言。
+
 ## Agent skills
 
 ### Issue tracker

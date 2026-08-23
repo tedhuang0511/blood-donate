@@ -37,9 +37,22 @@
     "keywords": "捐血活動,捐血,捐血站,血液庫存,台灣捐血"
   }
   </script>
+  <!-- 主題要在樣式套用前就決定好，否則深色使用者會先閃一下白底。
+       故意放在 <style> 之前、且不是 defer/async。 -->
+  <script>
+    (function(){
+      var saved=null;
+      try{ saved=localStorage.getItem('bd_theme'); }catch(e){}
+      if(saved!=='light' && saved!=='dark'){
+        saved=null; // 沒指定過就跟隨系統
+      }
+      var sys=window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+      if(!saved) document.documentElement.setAttribute('data-theme-auto','');
+    })();
+  </script>
   <style>
-    /* 配色一律走 CSS 變數：淺色是預設值，深色只覆蓋變數、不重寫規則。
-       深色跟隨系統 (prefers-color-scheme)，刻意不做手動切換鈕——多一顆鈕就要多存一份狀態。 */
+    /* 配色一律走 CSS 變數：淺色是預設值，深色只覆蓋變數、不重寫規則。 */
     :root {
       color-scheme: light;
       --bg: #f5f5f5;
@@ -99,8 +112,9 @@
       /* 焦點框刻意不用品牌紅：紅色在紅色 nav 上等於看不見 */
       --focus: #0b57d0;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
+    /* 深色的實際生效條件由 <head> 那段 inline script 決定並寫進 data-theme：
+       使用者沒指定過就跟隨系統，指定過就用他選的。寫在 <style> 之前執行，才不會閃一下錯的配色。 */
+    :root[data-theme="dark"] {
         color-scheme: dark;
         --bg: #151313;
         --surface: #1f1c1b;
@@ -150,7 +164,6 @@
         --g-limited-bg: rgba(255,255,255,.07);--g-limited-text: #9b948e;
         --gift-value-bg: rgba(224,180,0,.15); --gift-value-text: #e0bb52;
         --focus: #9ec3ff;
-      }
     }
     /* 鍵盤焦點：滑鼠點擊不顯示，Tab 過去才顯示 */
     :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
@@ -160,12 +173,20 @@
     body { font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; background: var(--bg); color: var(--text); }
     nav {
       position: sticky; top: 0; z-index: 100; background: var(--nav-bg); color: #fff;
-      padding: 0 24px; display: flex; align-items: center; gap: 14px;
+      padding: 0 16px 0 24px; display: flex; align-items: center; gap: 14px;
       height: 56px; box-shadow: 0 2px 6px var(--shadow-nav);
-      overflow-x: auto; flex-wrap: nowrap;
+      flex-wrap: nowrap;
     }
-    nav::-webkit-scrollbar { height: 3px; }
-    nav::-webkit-scrollbar-thumb { background: var(--nav-divider); }
+    /* 只有地區連結那段可以橫向捲；標題與主題鈕留在原地不被捲走 */
+    .nav-links { display: flex; align-items: center; gap: 14px; flex: 1 1 auto; min-width: 0; overflow-x: auto; flex-wrap: nowrap; }
+    .nav-links::-webkit-scrollbar { height: 3px; }
+    .nav-links::-webkit-scrollbar-thumb { background: var(--nav-divider); }
+    #themeToggle {
+      flex-shrink: 0; background: rgba(255,255,255,.12); border: none; color: #fff;
+      width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1rem;
+      line-height: 1; display: flex; align-items: center; justify-content: center; font-family: inherit;
+    }
+    #themeToggle:hover { background: rgba(255,255,255,.25); }
     nav .site-title { font-size: 1.1rem; font-weight: 700; white-space: nowrap; margin-right: 6px; flex-shrink: 0; }
     nav .nav-divider { width: 1px; height: 24px; background: var(--nav-divider); flex-shrink: 0; }
     nav a { color: var(--nav-link); text-decoration: none; font-size: .82rem; padding: 4px 10px; border-radius: 4px; transition: background .2s; white-space: nowrap; flex-shrink: 0; }
@@ -311,6 +332,7 @@
 <nav id="topnav">
   <span class="site-title">🩸 全台捐血活動</span>
   <div class="nav-divider"></div>
+  <div class="nav-links">
   <a href="#stock">庫存</a>
   <a href="#taipei">台北</a>
   <a href="#newtaipei">新北</a>
@@ -330,6 +352,8 @@
   <a href="#yilan">宜蘭</a>
   <a href="#hualien">花蓮</a>
   <a href="#outlying">離島</a>
+  </div>
+  <button id="themeToggle" type="button" title="主題" aria-label="切換配色主題"></button>
 </nav>
 
 <main>
@@ -775,6 +799,50 @@
 <button id="backToTop" type="button" title="回到頂端" aria-label="回到頂端">↑</button>
 
 <script>
+  // ---- 主題切換 ----
+  // 三段循環：跟隨系統 → 淺色 → 深色。<head> 的 inline script 已經先把初始值寫進 data-theme，
+  // 這裡只負責之後的切換與記憶。「跟隨系統」不寫 localStorage，這樣才分得出
+  // 「沒選過」和「選了跟系統目前一樣的顏色」——後者在系統換配色時不該跟著變。
+  (function(){
+    const btn=document.getElementById('themeToggle');
+    if(!btn) return;
+    const root=document.documentElement;
+    const sysDark=window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    const LABEL={auto:['🖥','跟隨系統'], light:['☀️','淺色'], dark:['🌙','深色']};
+
+    function current(){
+      return root.hasAttribute('data-theme-auto') ? 'auto' : root.getAttribute('data-theme');
+    }
+    function paint(){
+      const mode=current();
+      btn.textContent=LABEL[mode][0];
+      btn.title='配色：'+LABEL[mode][1]+'（點擊切換）';
+      btn.setAttribute('aria-label','配色：'+LABEL[mode][1]+'，點擊切換');
+    }
+    function apply(mode){
+      if(mode==='auto'){
+        root.setAttribute('data-theme-auto','');
+        root.setAttribute('data-theme', sysDark && sysDark.matches ? 'dark' : 'light');
+        try{ localStorage.removeItem('bd_theme'); }catch(e){}
+      } else {
+        root.removeAttribute('data-theme-auto');
+        root.setAttribute('data-theme', mode);
+        try{ localStorage.setItem('bd_theme', mode); }catch(e){}
+      }
+      paint();
+    }
+
+    btn.addEventListener('click', ()=>{
+      const order=['auto','light','dark'];
+      apply(order[(order.indexOf(current())+1)%order.length]);
+    });
+    // 還在「跟隨系統」時，系統換配色要即時跟上
+    if(sysDark && sysDark.addEventListener){
+      sysDark.addEventListener('change', ()=>{ if(current()==='auto') apply('auto'); });
+    }
+    paint();
+  })();
+
   // ---- 燈箱 ----
   // 一張海報 = 一個「活動」，同一個活動在多個地區各有一則「刊登」（見 CONTEXT.md）。
   // 西堤那檔活動有 16 則刊登，若照刊登切換，使用者會連續刷過 16 張一模一樣的海報，

@@ -223,10 +223,30 @@
     .activity-card.card-highlight { box-shadow: 0 0 0 3px var(--brand), 0 8px 20px var(--brand-glow); }
     .card-note { font-size: .75rem; color: var(--text-subtle); margin-top: 6px; line-height: 1.5; }
     .tag-pxmart { background: var(--pxmart-bg); color: var(--pxmart-text); padding: 1px 6px; border-radius: 4px; font-weight: 700; }
-    #lightbox { display: none; position: fixed; inset: 0; background: var(--overlay); z-index: 999; align-items: center; justify-content: center; }
+    /* 燈箱：永遠是暗底白字，不隨主題變 */
+    #lightbox { display: none; position: fixed; inset: 0; background: var(--overlay); z-index: 999; flex-direction: column; align-items: center; justify-content: center; touch-action: none; }
     #lightbox.show { display: flex; }
-    #lightbox img { max-width: 92vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,.5); }
-    #lightbox-close { position: absolute; top: 16px; right: 24px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; user-select: none; background: none; border: none; padding: 4px 10px; font-family: inherit; }
+    #lightbox-stage { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    #lightbox img { max-width: 92vw; max-height: 100%; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,.5); transform-origin: 0 0; user-select: none; -webkit-user-drag: none; cursor: zoom-in; }
+    #lightbox img.is-zoomed { cursor: grab; }
+    #lightbox img.is-panning { cursor: grabbing; }
+    #lightbox-info { flex: 0 0 auto; width: min(92vw, 760px); color: #fff; padding: 12px 2px 4px; text-align: left; }
+    #lightbox-date { font-size: .8rem; font-weight: 700; color: #ff9d90; margin-bottom: 2px; }
+    #lightbox-loc { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    #lightbox-note { font-size: .8rem; line-height: 1.6; color: rgba(255,255,255,.86); white-space: pre-line; max-height: 22vh; overflow-y: auto; }
+    #lightbox-regions { font-size: .74rem; line-height: 1.5; color: rgba(255,255,255,.62); margin-top: 8px; }
+    #lightbox-counter { flex: 0 0 auto; font-size: .74rem; color: rgba(255,255,255,.55); padding: 6px 0 10px; letter-spacing: .05em; }
+    #lightbox-close { position: absolute; top: 16px; right: 24px; font-size: 2rem; color: #fff; cursor: pointer; line-height: 1; user-select: none; background: none; border: none; padding: 4px 10px; font-family: inherit; z-index: 2; }
+    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.4); color: #fff; border: none; font-size: 2rem; line-height: 1; width: 48px; height: 64px; cursor: pointer; border-radius: 8px; font-family: inherit; z-index: 2; }
+    .lb-nav:hover { background: rgba(0,0,0,.65); }
+    .lb-nav[hidden] { display: none; }
+    #lightbox-prev { left: 12px; }
+    #lightbox-next { right: 12px; }
+    @media (max-width: 560px) {
+      .lb-nav { width: 40px; height: 56px; font-size: 1.6rem; background: rgba(0,0,0,.3); }
+      #lightbox-info { padding: 10px 12px 4px; }
+      #lightbox-note { max-height: 18vh; }
+    }
     .source-note { text-align: center; font-size: .75rem; color: var(--text-ghost); margin-top: 40px; }
     .source-note a { color: var(--text-ghost); }
     .ambassador-card { background: var(--surface); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 4px var(--shadow-1); text-align: center; }
@@ -736,41 +756,215 @@
 <p class="source-note">資料來源：<a href="https://www.ptt.cc/bbs/Lifeismoney/M.1767366026.A.B74.html" target="_blank">PTT Lifeismoney — 2026年全台捐血贈品</a>／最後更新：2026/08/22</p>
 </main>
 
-<div id="lightbox" onclick="closeLb()" role="dialog" aria-modal="true" aria-label="活動海報放大檢視">
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="活動海報放大檢視">
   <button id="lightbox-close" type="button" onclick="closeLb()" aria-label="關閉海報">✕</button>
-  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()"/>
+  <button id="lightbox-prev" class="lb-nav" type="button" aria-label="上一個活動">‹</button>
+  <button id="lightbox-next" class="lb-nav" type="button" aria-label="下一個活動">›</button>
+  <div id="lightbox-stage">
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+  <div id="lightbox-info">
+    <div id="lightbox-date"></div>
+    <div id="lightbox-loc"></div>
+    <div id="lightbox-note"></div>
+    <div id="lightbox-regions"></div>
+  </div>
+  <div id="lightbox-counter"></div>
 </div>
 
 <button id="backToTop" type="button" title="回到頂端" aria-label="回到頂端">↑</button>
 
 <script>
-  // 開燈箱前記住是誰打開的，關閉時把焦點還回去，鍵盤使用者才不會被丟回頁面頂端
-  let lbReturnFocus=null;
-  function lb(src){
-    lbReturnFocus=document.activeElement;
-    document.getElementById('lightbox-img').src=src;
-    document.getElementById('lightbox').classList.add('show');
-    document.body.style.overflow='hidden';
-    const closeBtn=document.getElementById('lightbox-close');
-    if(closeBtn) closeBtn.focus();
-  }
-  function closeLb(){
+  // ---- 燈箱 ----
+  // 一張海報 = 一個「活動」，同一個活動在多個地區各有一則「刊登」（見 CONTEXT.md）。
+  // 西堤那檔活動有 16 則刊登，若照刊登切換，使用者會連續刷過 16 張一模一樣的海報，
+  // 所以切換清單依海報網址去重、以活動為單位，並在文字條標出這個活動還在哪些地區辦。
+  // 切換範圍取「目前可見」的卡片，篩選與排序都會自然反映進來。
+  var lb, closeLb;
+  (function(){
     const box=document.getElementById('lightbox');
-    if(!box.classList.contains('show')) return;
-    box.classList.remove('show');
-    document.body.style.overflow='';
-    if(lbReturnFocus && document.contains(lbReturnFocus)) lbReturnFocus.focus();
-    lbReturnFocus=null;
-  }
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){ closeLb(); return; }
-    // 焦點鎖在燈箱內：關閉鈕是裡面唯一的可聚焦元素，所以 Tab 一律留在它身上
-    if(e.key==='Tab' && document.getElementById('lightbox').classList.contains('show')){
-      e.preventDefault();
-      const closeBtn=document.getElementById('lightbox-close');
-      if(closeBtn) closeBtn.focus();
+    const img=document.getElementById('lightbox-img');
+    const stage=document.getElementById('lightbox-stage');
+    const prevBtn=document.getElementById('lightbox-prev');
+    const nextBtn=document.getElementById('lightbox-next');
+    const dateEl=document.getElementById('lightbox-date');
+    const locEl=document.getElementById('lightbox-loc');
+    const noteEl=document.getElementById('lightbox-note');
+    const regionsEl=document.getElementById('lightbox-regions');
+    const counterEl=document.getElementById('lightbox-counter');
+    const closeBtn=document.getElementById('lightbox-close');
+
+    let campaigns=[], idx=0, returnFocus=null;
+    let scale=1, tx=0, ty=0, baseLeft=0, baseTop=0;
+    const MIN_SCALE=1, MAX_SCALE=6;
+
+    function buildCampaigns(){
+      const list=[], byPoster=new Map();
+      document.querySelectorAll('.activity-card:not(.card-hidden)').forEach(card=>{
+        const im=card.querySelector('.card-img-wrap img');
+        if(!im) return;
+        const src=im.getAttribute('src');
+        let c=byPoster.get(src);
+        if(!c){
+          c={poster:src, date:card.dataset.shareDate||'', note:card.dataset.shareNote||'', locs:[]};
+          byPoster.set(src,c);
+          list.push(c);
+        }
+        if(card.dataset.shareLoc) c.locs.push(card.dataset.shareLoc);
+      });
+      return list;
     }
-  });
+
+    // 量出圖片沒有 transform 時的位置，縮放與平移都以它為基準
+    function measureBase(){
+      const prev=img.style.transform;
+      img.style.transform='';
+      const r=img.getBoundingClientRect();
+      baseLeft=r.left; baseTop=r.top;
+      img.style.transform=prev;
+    }
+    function applyTransform(){
+      img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
+      img.classList.toggle('is-zoomed', scale>1);
+    }
+    function resetZoom(){ scale=1; tx=0; ty=0; applyTransform(); }
+    function zoomAt(clientX, clientY, next){
+      next=Math.min(MAX_SCALE, Math.max(MIN_SCALE, next));
+      // 讓游標下的那個點在縮放前後停在原地：p=(screen-base-t)/scale，再解出新的 t
+      const px=(clientX-baseLeft-tx)/scale;
+      const py=(clientY-baseTop-ty)/scale;
+      tx=clientX-baseLeft-next*px;
+      ty=clientY-baseTop-next*py;
+      scale=next;
+      if(scale===MIN_SCALE){ tx=0; ty=0; }
+      applyTransform();
+    }
+
+    function render(){
+      const c=campaigns[idx];
+      if(!c) return;
+      img.src=c.poster;
+      const first=c.locs[0]||'';
+      img.alt=(c.date+' '+first).trim()+' 捐血活動海報';
+      dateEl.textContent=c.date;
+      locEl.textContent=first;
+      noteEl.textContent=c.note;
+      if(c.locs.length>1){
+        const others=[...new Set(c.locs.slice(1).map(l=>l.split(/\s+/)[0]))];
+        regionsEl.textContent='本活動另有 '+(c.locs.length-1)+' 個地區：'+others.join('、');
+      } else {
+        regionsEl.textContent='';
+      }
+      const many=campaigns.length>1;
+      prevBtn.hidden=!many; nextBtn.hidden=!many;
+      counterEl.textContent=many ? (idx+1)+' / '+campaigns.length : '';
+      resetZoom();
+      // 圖片換了尺寸才重新量基準
+      if(img.complete) measureBase(); else img.addEventListener('load', measureBase, {once:true});
+    }
+
+    function go(step){
+      if(campaigns.length<2) return;
+      idx=(idx+step+campaigns.length)%campaigns.length;
+      render();
+    }
+
+    lb=function(src){
+      campaigns=buildCampaigns();
+      const found=campaigns.findIndex(c=>c.poster===src);
+      idx=found>=0?found:0;
+      if(!campaigns.length) return;
+      returnFocus=document.activeElement;
+      box.classList.add('show');
+      document.body.style.overflow='hidden';
+      render();
+      closeBtn.focus();
+    };
+    closeLb=function(){
+      if(!box.classList.contains('show')) return;
+      box.classList.remove('show');
+      document.body.style.overflow='';
+      resetZoom();
+      if(returnFocus && document.contains(returnFocus)) returnFocus.focus();
+      returnFocus=null;
+    };
+
+    prevBtn.addEventListener('click', e=>{ e.stopPropagation(); go(-1); });
+    nextBtn.addEventListener('click', e=>{ e.stopPropagation(); go(1); });
+    // 只有點到背景本身才關閉，點文字條或圖片不關
+    box.addEventListener('click', e=>{ if(e.target===box || e.target===stage) closeLb(); });
+
+    document.addEventListener('keydown', e=>{
+      if(!box.classList.contains('show')){
+        if(e.key==='Escape') closeLb();
+        return;
+      }
+      if(e.key==='Escape'){ closeLb(); return; }
+      if(e.key==='ArrowLeft'){ e.preventDefault(); go(-1); return; }
+      if(e.key==='ArrowRight'){ e.preventDefault(); go(1); return; }
+      if(e.key==='Tab'){
+        // 焦點鎖在燈箱內：在關閉／上一個／下一個之間循環
+        e.preventDefault();
+        const focusables=[closeBtn, prevBtn, nextBtn].filter(el=>!el.hidden);
+        const at=focusables.indexOf(document.activeElement);
+        const nextAt=(at+(e.shiftKey?-1:1)+focusables.length)%focusables.length;
+        focusables[nextAt].focus();
+      }
+    });
+
+    // 雙擊在 1x 與 2.5x 之間切換
+    img.addEventListener('dblclick', e=>{
+      e.preventDefault();
+      if(scale>MIN_SCALE) resetZoom(); else zoomAt(e.clientX, e.clientY, 2.5);
+    });
+    stage.addEventListener('wheel', e=>{
+      e.preventDefault();
+      zoomAt(e.clientX, e.clientY, scale*(e.deltaY<0?1.15:1/1.15));
+    }, {passive:false});
+
+    // 指標事件同時處理「放大後拖曳平移」「雙指縮放」「未放大時左右滑動換張」
+    const pointers=new Map();
+    let pinchStart=null, panStart=null, swipeStart=null;
+    stage.addEventListener('pointerdown', e=>{
+      try{ stage.setPointerCapture(e.pointerId); }catch(err){}
+      pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if(pointers.size===2){
+        const [a,b]=[...pointers.values()];
+        pinchStart={dist:Math.hypot(a.x-b.x, a.y-b.y), scale:scale};
+        panStart=null; swipeStart=null;
+      } else if(pointers.size===1){
+        if(scale>MIN_SCALE){ panStart={x:e.clientX, y:e.clientY, tx:tx, ty:ty}; img.classList.add('is-panning'); }
+        else { swipeStart={x:e.clientX, y:e.clientY, t:Date.now()}; }
+      }
+    });
+    stage.addEventListener('pointermove', e=>{
+      if(!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if(pointers.size===2 && pinchStart){
+        const [a,b]=[...pointers.values()];
+        const dist=Math.hypot(a.x-b.x, a.y-b.y);
+        zoomAt((a.x+b.x)/2, (a.y+b.y)/2, pinchStart.scale*(dist/pinchStart.dist));
+      } else if(panStart){
+        tx=panStart.tx+(e.clientX-panStart.x);
+        ty=panStart.ty+(e.clientY-panStart.y);
+        applyTransform();
+      }
+    });
+    function endPointer(e){
+      pointers.delete(e.pointerId);
+      if(pointers.size<2) pinchStart=null;
+      if(panStart && pointers.size===0){ panStart=null; img.classList.remove('is-panning'); }
+      if(swipeStart && pointers.size===0){
+        const dx=e.clientX-swipeStart.x, dy=e.clientY-swipeStart.y;
+        // 只有在沒放大、橫向位移夠大且明顯比縱向多時，才算換張
+        if(scale===MIN_SCALE && Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5) go(dx<0?1:-1);
+        swipeStart=null;
+      }
+    }
+    stage.addEventListener('pointerup', endPointer);
+    stage.addEventListener('pointercancel', endPointer);
+    window.addEventListener('resize', ()=>{ if(box.classList.contains('show')){ resetZoom(); measureBase(); } });
+  })();
   function imgErr(img){
     img.style.display='none';
     const w=img.closest('.card-img-wrap');

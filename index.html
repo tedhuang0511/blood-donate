@@ -277,6 +277,13 @@
     .activity-card.card-filtered-out { display: none; }
     .filter-row2 { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-soft); }
     .filter-hint { font-size: .72rem; color: var(--text-ghost); margin-top: 8px; line-height: 1.5; }
+    /* 篩到 0 筆時所有地區區塊都會消失，只剩一行數字，看起來像壞掉 */
+    .empty-state { display: none; margin-top: 14px; padding: 20px 16px; border: 1.5px dashed var(--border); border-radius: 10px; text-align: center; }
+    .empty-state.show { display: block; }
+    .empty-state-title { font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .empty-state-sub { font-size: .8rem; color: var(--text-muted); margin-bottom: 14px; }
+    .empty-state-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+    .empty-state-actions .qf-label { width: 100%; margin-bottom: 2px; }
   </style>
 </head>
 <body>
@@ -369,6 +376,11 @@
   </div>
   <div class="filter-hint" id="filterHint"></div>
   <div id="searchStats"></div>
+  <div class="empty-state" id="emptyState" role="status">
+    <div class="empty-state-title" id="emptyStateTitle"></div>
+    <div class="empty-state-sub">試試看別的關鍵字，或改用下面的快速篩選。</div>
+    <div class="empty-state-actions" id="emptyStateActions"></div>
+  </div>
 </div>
 
 <!-- 台北 -->
@@ -1253,6 +1265,54 @@
       }, 250);
     }
 
+    // 篩到 0 筆時，所有地區區塊都會 display:none，畫面上只剩一行「找到 0 筆」，看起來像壞掉。
+    // 補一塊空狀態，並把「還沒被試過的」快速篩選當成下一步建議列出來。
+    const emptyState=document.getElementById('emptyState');
+    const emptyStateTitle=document.getElementById('emptyStateTitle');
+    const emptyStateActions=document.getElementById('emptyStateActions');
+    function renderEmptyState(matched, q, onlyNew){
+      if(!emptyState) return;
+      const show = matched===0 && (!!q || onlyNew);
+      emptyState.classList.toggle('show', show);
+      if(!show) return;
+      emptyStateTitle.textContent = q
+        ? (onlyNew ? '沒有「'+q+'」相關的新增活動' : '找不到符合「'+q+'」的活動')
+        : '上次造訪後沒有新增活動';
+      emptyStateActions.innerHTML='';
+      const clear=document.createElement('button');
+      clear.type='button';
+      clear.className='qf-btn';
+      clear.textContent='清除篩選';
+      clear.addEventListener('click', ()=>{
+        searchBox.value='';
+        if(SiteFilters.onlyNew){
+          SiteFilters.onlyNew=false;
+          const nb=document.getElementById('onlyNewBtn');
+          if(nb) nb.classList.remove('active');
+        }
+        applyFilter();
+        searchBox.focus();
+      });
+      emptyStateActions.appendChild(clear);
+      qfButtons.forEach(btn=>{
+        if(btn.dataset.kw.toLowerCase()===(q||'').toLowerCase()) return;
+        const s=document.createElement('button');
+        s.type='button';
+        s.className='qf-btn';
+        s.textContent=btn.textContent;
+        s.addEventListener('click', ()=>{
+          if(SiteFilters.onlyNew){
+            SiteFilters.onlyNew=false;
+            const nb=document.getElementById('onlyNewBtn');
+            if(nb) nb.classList.remove('active');
+          }
+          searchBox.value=btn.dataset.kw;
+          applyFilter();
+        });
+        emptyStateActions.appendChild(s);
+      });
+    }
+
     function applyFilter(){
       const kw=searchBox.value.trim().toLowerCase();
       const onlyNew=!!SiteFilters.onlyNew;
@@ -1271,6 +1331,7 @@
       if(SiteFilters.expandNotesFor) SiteFilters.expandNotesFor(kw);
       syncUrl(searchBox.value.trim());
       const q=searchBox.value.trim();
+      renderEmptyState(matched, q, onlyNew);
       if(kw && onlyNew)      searchStats.textContent='找到 '+matched+' 筆新增且符合「'+q+'」的活動';
       else if(kw)            searchStats.textContent='找到 '+matched+' 筆符合「'+q+'」的活動';
       else if(onlyNew)       searchStats.textContent='上次造訪後新增了 '+matched+' 筆活動';

@@ -232,7 +232,15 @@
     .ambassador-card { background: var(--surface); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; box-shadow: 0 1px 4px var(--shadow-1); text-align: center; }
     .ambassador-card img { max-width: 100%; width: 300px; border-radius: 10px; box-shadow: 0 2px 12px var(--shadow-3); display: block; margin: 0 auto; filter: var(--poster-filter); transition: filter .3s; }
     .ambassador-card img:hover { filter: none; }
-    @media (max-width: 500px) { .activity-grid { grid-template-columns: 1fr 1fr; } }
+    /* 贈品說明最長 271 字元，兩欄下卡片會變成極高瘦的一條，故窄螢幕改單欄。
+       單欄會讓頁面長度加倍，所以同時把說明收成 2 行、需要時才展開。 */
+    .note-toggle { display: none; background: none; border: none; padding: 3px 0 0; font-family: inherit; font-size: .72rem; font-weight: 700; color: var(--brand); cursor: pointer; }
+    @media (max-width: 560px) {
+      .activity-grid { grid-template-columns: 1fr; }
+      .card-note.is-collapsible { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .card-note.is-collapsible.is-expanded { display: block; overflow: visible; }
+      .note-toggle.is-needed { display: inline-block; }
+    }
     .search-wrap { background: var(--surface); border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; box-shadow: 0 1px 4px var(--shadow-1); }
     .search-box-row { display: flex; gap: 8px; margin-bottom: 12px; }
     #searchBox { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .95rem; font-family: inherit; background: var(--surface); color: var(--text); }
@@ -1157,6 +1165,52 @@
     refreshHint();
   })();
 
+  // 窄螢幕把贈品說明收成 2 行，只有真的被截到的才長出「更多」按鈕。
+  // 是否被截到得等 media query 生效才量得出來，所以桌機載入時不量，等真的縮到窄螢幕再算。
+  (function(){
+    const mq=window.matchMedia('(max-width: 560px)');
+    const pairs=[];
+    document.querySelectorAll('.activity-card .card-note').forEach(note=>{
+      note.classList.add('is-collapsible');
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='note-toggle';
+      btn.textContent='更多';
+      btn.setAttribute('aria-expanded','false');
+      btn.addEventListener('click',()=>{
+        const open=note.classList.toggle('is-expanded');
+        btn.textContent=open?'收合':'更多';
+        btn.setAttribute('aria-expanded',open?'true':'false');
+      });
+      note.insertAdjacentElement('afterend',btn);
+      pairs.push({note,btn});
+    });
+
+    function measure(){
+      if(!mq.matches) return;
+      pairs.forEach(({note,btn})=>{
+        const wasOpen=note.classList.contains('is-expanded');
+        if(wasOpen) note.classList.remove('is-expanded');
+        btn.classList.toggle('is-needed', note.scrollHeight>note.clientHeight+2);
+        if(wasOpen) note.classList.add('is-expanded');
+      });
+    }
+    measure();
+    mq.addEventListener('change', measure);
+    window.addEventListener('resize', measure);
+
+    // 搜尋命中時自動展開，清空關鍵字時收回原狀
+    SiteFilters.expandNotesFor=function(kw){
+      pairs.forEach(({note,btn})=>{
+        const card=note.closest('.activity-card');
+        const open=!!kw && card && !card.classList.contains('card-hidden');
+        note.classList.toggle('is-expanded', open);
+        btn.textContent=open?'收合':'更多';
+        btn.setAttribute('aria-expanded',open?'true':'false');
+      });
+    };
+  })();
+
   // 搜尋／篩選：依關鍵字比對卡片的日期、地點、贈品說明文字
   (function(){
     const searchBox=document.getElementById('searchBox');
@@ -1190,6 +1244,8 @@
         sec.classList.toggle('region-hidden', (!!kw || onlyNew) && !anyVisible);
       });
       qfButtons.forEach(btn=>{ btn.classList.toggle('active', kw && btn.dataset.kw.toLowerCase()===kw); });
+      // 命中的關鍵字可能藏在被摺疊的那幾行裡，展開才看得到自己為什麼命中
+      if(SiteFilters.expandNotesFor) SiteFilters.expandNotesFor(kw);
       const q=searchBox.value.trim();
       if(kw && onlyNew)      searchStats.textContent='找到 '+matched+' 筆新增且符合「'+q+'」的活動';
       else if(kw)            searchStats.textContent='找到 '+matched+' 筆符合「'+q+'」的活動';
